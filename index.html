@@ -1,0 +1,4491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в Систему Корпорации</title>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в Систему Корпорации</title>
+    <!-- Подключаем футуристичные шрифты от Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --bg: #171a21;
+            --blue: #6b73ff;
+            --purple: #7c3fe0;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        #landing-page * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #landing-page {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Jura', sans-serif;
+            min-height: 100vh; width: 100%; position: absolute; top: 0; left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            /* Сетка на фоне для кибер-эффекта */
+            background-image: 
+                linear-gradient(rgba(107, 115, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(107, 115, 255, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center center;
+            position: relative;
+        }
+
+        /* Анимация сканирующей линии (CRT-эффект) */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(107, 115, 255, 0.1);
+            opacity: 0.4;
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.5);
+        }
+
+        @keyframes scan {
+            0% { top: -10px; }
+            100% { top: 100%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Терминал в начале */
+        .terminal-header {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--blue);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px rgba(107, 115, 255, 0.5);
+            min-height: 80px; /* Чтобы блок не прыгал при печати */
+        }
+
+        .term-line {
+            margin-bottom: 5px;
+        }
+
+        .term-line::before {
+            content: "> ";
+            opacity: 0.7;
+        }
+
+        /* Основной контентный блок */
+        .content-box {
+            background: rgba(23, 26, 33, 0.85);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(107, 115, 255, 0.3);
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(124, 63, 224, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .content-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Кибер-уголки для рамки */
+        .content-box::before, .content-box::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+        }
+
+        .content-box::before {
+            top: -2px; left: -2px;
+            border-top: 2px solid var(--blue);
+            border-left: 2px solid var(--blue);
+            box-shadow: -5px -5px 15px rgba(107, 115, 255, 0.3);
+        }
+
+        .content-box::after {
+            bottom: -2px; right: -2px;
+            border-bottom: 2px solid var(--purple);
+            border-right: 2px solid var(--purple);
+            box-shadow: 5px 5px 15px rgba(124, 63, 224, 0.3);
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(107, 115, 255, 0.2);
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 35px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        /* Градиентный текст */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(107, 115, 255, 0.2);
+        }
+
+        .accent-blue { color: var(--blue); text-shadow: 0 0 10px rgba(107, 115, 255, 0.3); }
+        .accent-purple { color: var(--purple); text-shadow: 0 0 10px rgba(124, 63, 224, 0.3); }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+            border-bottom: 1px dashed var(--purple);
+        }
+
+        /* Блок запуска */
+        .launch-sequence {
+            margin-top: 50px;
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 4px;
+            border: 1px dashed rgba(107, 115, 255, 0.3);
+        }
+
+        .system-msg {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--blue);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .blink {
+            animation: blinker 1.5s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0.3; }
+        }
+
+        /* Кибер-кнопка */
+        .cyber-btn {
+            background: transparent;
+            border: 2px solid var(--purple);
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            margin-top: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(124, 63, 224, 0.2);
+        }
+
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(107, 115, 255, 0.4), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .cyber-btn:hover {
+            background: rgba(124, 63, 224, 0.2);
+            box-shadow: 0 0 25px rgba(124, 63, 224, 0.6), inset 0 0 10px rgba(107, 115, 255, 0.4);
+            border-color: var(--blue);
+            text-shadow: 0 0 8px #fff;
+        }
+
+        .cyber-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Адаптив для телефонов */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.1rem; }
+            p { font-size: 1rem; }
+            .content-box { padding: 25px 20px; }
+            .terminal-header { font-size: 0.9rem; }
+        }
+    
+
+        /* Overrides to fix the white boxes and text colors */
+        #simulator-page .option {
+            background-color: #343bc0 !important;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        #simulator-page .option:hover {
+            background-color: #4a51e8 !important;
+            border: none !important;
+            box-shadow: 0 0 15px rgba(52, 59, 192, 0.6) !important;
+        }
+
+        #simulator-page .option.selected {
+            background-color: #2a2f99 !important;
+            border: 2px solid #00ffcc !important;
+            box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.3) !important;
+        }
+
+        #simulator-page .topic-btn {
+            background-color: #343bc0 !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+
+        #simulator-page .topic-btn:hover {
+            background-color: #4a51e8 !important;
+            box-shadow: 0 0 15px rgba(52, 59, 192, 0.6) !important;
+        }
+
+        #simulator-page .question-text, 
+        #simulator-page p, 
+        #simulator-page label {
+            color: #ffffff !important;
+        }
+
+
+        /* Распределение по высоте (Distribution by height) и увеличение читабельности */
+        #simulator-page {
+            align-items: stretch !important;
+            padding: 0 !important;
+        }
+
+        #simulator-page .page-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh !important;
+            padding: 40px 20px !important;
+            margin: 0 auto !important;
+            justify-content: center !important;
+            flex-grow: 1 !important;
+        }
+
+        #simulator-page .container {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+        }
+
+        /* Заставляем активный слайд занимать всё доступное место */
+        #simulator-page .slide.active {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+            justify-content: space-between !important;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Увеличиваем размер текстов для лучшей читаемости */
+        #simulator-page .question-text {
+            font-size: 1.5rem !important;
+            line-height: 1.6 !important;
+            margin: 30px 0 !important;
+            flex-grow: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        #simulator-page #simulator-page .options {
+            gap: 15px !important;
+            margin-bottom: 30px !important;
+        }
+
+        #simulator-page .option {
+            font-size: 1.2rem !important;
+            padding: 20px 25px !important;
+            border-radius: 8px !important;
+            line-height: 1.5 !important;
+        }
+
+        #simulator-page .topics-grid {
+            gap: 25px !important;
+            margin: 40px 0 !important;
+        }
+
+        #simulator-page .topic-btn {
+            font-size: 1.3rem !important;
+            padding: 25px !important;
+            border-radius: 8px !important;
+        }
+
+        #simulator-page .bot-message, #simulator-page .round-result-box {
+            margin-top: 20px !important;
+            padding: 25px !important;
+            font-size: 1.1rem !important;
+        }
+
+
+        /* Эффект стекла для плашек (стекломорфизм) */
+        #simulator-page .option-btn {
+            background: rgba(23, 26, 33, 0.6) !important;
+            backdrop-filter: blur(8px) !important;
+            border: 1px dashed rgba(107, 115, 255, 0.4) !important;
+            border-radius: 8px !important;
+            padding: 20px 25px !important;
+            color: #ffffff !important;
+            font-size: 1.2rem !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            line-height: 1.5 !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+        }
+
+        #simulator-page .option-btn input {
+            margin-right: 15px !important;
+            transform: scale(1.3) !important;
+            cursor: pointer !important;
+            accent-color: #6b73ff !important;
+        }
+
+        #simulator-page .option-btn:hover {
+            background: rgba(52, 59, 192, 0.4) !important;
+            border-color: #6b73ff !important;
+            box-shadow: 0 0 15px rgba(107, 115, 255, 0.5) !important;
+        }
+
+        #simulator-page .option-btn.selected {
+            background: rgba(52, 59, 192, 0.6) !important;
+            border: 1px solid #6b73ff !important;
+            box-shadow: inset 0 0 10px rgba(107, 115, 255, 0.5) !important;
+        }
+
+        /* Цвета обводки при правильном/неправильном ответе */
+        #simulator-page .option-btn.correct {
+            background: rgba(8, 199, 200, 0.1) !important;
+            border: 2px solid #08C7C8 !important;
+            box-shadow: 0 0 15px rgba(8, 199, 200, 0.4) !important;
+        }
+
+        #simulator-page .option-btn.wrong {
+            background: rgba(207, 74, 176, 0.1) !important;
+            border: 2px solid #CF4AB0 !important;
+            box-shadow: 0 0 15px rgba(207, 74, 176, 0.4) !important;
+        }
+
+        /* Маркеры "Ваш выбор" и "Выбор бота" в кибер-стиле */
+        #simulator-page .badge {
+            position: absolute !important;
+            top: -12px !important;
+            padding: 4px 10px !important;
+            border-radius: 4px !important;
+            color: #ffffff !important;
+            font-size: 0.8rem !important;
+            font-weight: bold !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+            z-index: 10 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        #simulator-page .badge-user { 
+            background: #6b73ff !important;
+            border: 1px solid #7c3fe0 !important;
+            right: 15px !important; 
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.6) !important;
+        }
+
+        #simulator-page .badge-bot { 
+            background: #CF4AB0 !important;
+            border: 1px solid #ff3366 !important;
+            right: 140px !important; 
+            box-shadow: 0 0 10px rgba(207, 74, 176, 0.6) !important;
+        }
+
+        @media (max-width: 600px) {
+            #simulator-page .badge-user {
+                right: 10px !important;
+                font-size: 0.7rem !important;
+                padding: 3px 6px !important;
+            }
+            #simulator-page .badge-bot {
+                right: 95px !important;
+                font-size: 0.7rem !important;
+                padding: 3px 6px !important;
+            }
+        }
+
+</style>
+
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренажер: Поединок с роботом</title>
+    <!-- Подключаем футуристичные шрифты от Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+
+        :root {
+            --bg: #171a21;
+            --blue: #6b73ff;
+            --purple: #7c3fe0;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+
+            --primary-color: #6b73ff;
+            --primary-hover: #7c3fe0;
+            --correct-color: #00ffcc;
+            --wrong-color: #ff3366;
+            --font-main: 'Jura', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
+        }
+
+        #simulator-page * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #simulator-page {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh; width: 100%; position: absolute; top: 0; left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            /* Сетка на фоне для кибер-эффекта */
+            background-image: 
+                linear-gradient(rgba(107, 115, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(107, 115, 255, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center center;
+            position: relative;
+        }
+
+        /* Анимация сканирующей линии (CRT-эффект) */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(107, 115, 255, 0.1);
+            opacity: 0.4;
+            animation: scan 6s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.5);
+        }
+
+        @keyframes scan {
+            0% { top: -10px; }
+            100% { top: 100%; }
+        }
+
+        /* Главный контейнер для центрирования всего содержимого */
+        .page-wrapper {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Терминал перед тренажером */
+        .terminal-header {
+            font-family: var(--font-mono);
+            color: var(--blue);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px rgba(107, 115, 255, 0.5);
+        }
+
+        .term-line {
+            margin-bottom: 5px;
+        }
+
+        .term-line::before {
+            content: "> ";
+            opacity: 0.7;
+        }
+
+        /* Контейнер тренажера в стиле content-box */
+        .container {
+            background: rgba(23, 26, 33, 0.85);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(107, 115, 255, 0.3);
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(124, 63, 224, 0.05);
+            width: 100%;
+        }
+
+        /* Кибер-уголки для рамки */
+        .container::before, .container::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+        }
+
+        .container::before {
+            top: -2px; left: -2px;
+            border-top: 2px solid var(--blue);
+            border-left: 2px solid var(--blue);
+            box-shadow: -5px -5px 15px rgba(107, 115, 255, 0.3);
+        }
+
+        .container::after {
+            bottom: -2px; right: -2px;
+            border-bottom: 2px solid var(--purple);
+            border-right: 2px solid var(--purple);
+            box-shadow: 5px 5px 15px rgba(124, 63, 224, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(107, 115, 255, 0.2);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(107, 115, 255, 0.2);
+            margin: 0;
+        }
+
+        .scoreboard {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 15px;
+            border: 1px dashed var(--purple);
+            color: var(--text-main);
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Выбор темы */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .topic-btn {
+            background: transparent;
+            border: 1px dashed rgba(107, 115, 255, 0.3);
+            padding: 15px;
+            font-family: var(--font-main);
+            color: var(--text-main);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .topic-btn:hover {
+            background: rgba(107, 115, 255, 0.1);
+            border: 1px solid var(--blue);
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.2);
+        }
+
+        button.cyber-btn {
+            background: transparent;
+            border: 2px solid var(--purple);
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            margin-top: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(124, 63, 224, 0.2);
+            width: 100%;
+        }
+
+        button.cyber-btn:hover {
+            background: rgba(124, 63, 224, 0.2);
+            box-shadow: 0 0 25px rgba(124, 63, 224, 0.5);
+        }
+
+        button:disabled {
+            background-color: transparent !important;
+            border: 1px dashed rgba(255,255,255,0.2) !important;
+            color: rgba(255,255,255,0.4) !important;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+
+        /* Вопросы и ответы */
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-text {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-align: right;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px dashed rgba(107, 115, 255, 0.3);
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            box-shadow: 0 0 10px var(--blue);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            background: transparent;
+            border: 1px dashed rgba(107, 115, 255, 0.3);
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+            color: var(--text-main);
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .option:hover {
+            background: rgba(107, 115, 255, 0.1);
+            border: 1px solid var(--blue);
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.2);
+        }
+
+        .option.selected {
+            background: rgba(107, 115, 255, 0.2);
+            border: 1px solid var(--blue);
+            box-shadow: inset 0 0 10px rgba(107, 115, 255, 0.3);
+        }
+
+        .option.correct {
+            background-color: rgba(0, 255, 204, 0.1);
+            border: 1px solid var(--correct-color);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .option.wrong {
+            background-color: rgba(255, 51, 102, 0.1);
+            border: 1px solid var(--wrong-color);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.2);
+        }
+
+        .bot-message {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border: 1px dashed rgba(107, 115, 255, 0.3);
+            font-family: var(--font-mono);
+            color: var(--blue);
+            display: none;
+        }
+
+        .bot-header {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bot-avatar {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(124, 63, 224, 0.2);
+            border: 1px solid var(--purple);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--purple);
+            box-shadow: 0 0 10px rgba(124, 63, 224, 0.5);
+        }
+
+        .bot-header span {
+            color: var(--purple);
+            font-weight: 700;
+        }
+
+        .round-result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border: 1px dashed rgba(107, 115, 255, 0.3);
+            display: none;
+            text-align: center;
+        }
+
+        .round-result-box h3 {
+            margin-top: 0;
+            color: #fff;
+            margin-bottom: 10px;
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+        }
+
+        .round-result-box p {
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .result-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+
+        .result-text {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(107, 115, 255, 0.2);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.8); 
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: rgba(23, 26, 33, 0.95);
+            margin: 10% auto; 
+            padding: 30px;
+            border: 1px solid var(--purple);
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 0 30px rgba(124, 63, 224, 0.3);
+            position: relative;
+        }
+
+        .close {
+            color: var(--text-muted);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: var(--wrong-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            font-family: var(--font-mono);
+            color: var(--purple);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .modal ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .modal li {
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+    
+
+        /* Overrides to fix the white boxes and text colors */
+        #simulator-page .option {
+            background-color: #343bc0 !important;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        #simulator-page .option:hover {
+            background-color: #4a51e8 !important;
+            border: none !important;
+            box-shadow: 0 0 15px rgba(52, 59, 192, 0.6) !important;
+        }
+
+        #simulator-page .option.selected {
+            background-color: #2a2f99 !important;
+            border: 2px solid #00ffcc !important;
+            box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.3) !important;
+        }
+
+        #simulator-page .topic-btn {
+            background-color: #343bc0 !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+
+        #simulator-page .topic-btn:hover {
+            background-color: #4a51e8 !important;
+            box-shadow: 0 0 15px rgba(52, 59, 192, 0.6) !important;
+        }
+
+        #simulator-page .question-text, 
+        #simulator-page p, 
+        #simulator-page label {
+            color: #ffffff !important;
+        }
+
+
+        /* Распределение по высоте (Distribution by height) и увеличение читабельности */
+        #simulator-page {
+            align-items: stretch !important;
+            padding: 0 !important;
+        }
+
+        #simulator-page .page-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh !important;
+            padding: 40px 20px !important;
+            margin: 0 auto !important;
+            justify-content: center !important;
+            flex-grow: 1 !important;
+        }
+
+        #simulator-page .container {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+        }
+
+        /* Заставляем активный слайд занимать всё доступное место */
+        #simulator-page .slide.active {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+            justify-content: space-between !important;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Увеличиваем размер текстов для лучшей читаемости */
+        #simulator-page .question-text {
+            font-size: 1.5rem !important;
+            line-height: 1.6 !important;
+            margin: 30px 0 !important;
+            flex-grow: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        #simulator-page #simulator-page .options {
+            gap: 15px !important;
+            margin-bottom: 30px !important;
+        }
+
+        #simulator-page .option {
+            font-size: 1.2rem !important;
+            padding: 20px 25px !important;
+            border-radius: 8px !important;
+            line-height: 1.5 !important;
+        }
+
+        #simulator-page .topics-grid {
+            gap: 25px !important;
+            margin: 40px 0 !important;
+        }
+
+        #simulator-page .topic-btn {
+            font-size: 1.3rem !important;
+            padding: 25px !important;
+            border-radius: 8px !important;
+        }
+
+        #simulator-page .bot-message, #simulator-page .round-result-box {
+            margin-top: 20px !important;
+            padding: 25px !important;
+            font-size: 1.1rem !important;
+        }
+
+
+        /* Эффект стекла для плашек (стекломорфизм) */
+        #simulator-page .option-btn {
+            background: rgba(23, 26, 33, 0.6) !important;
+            backdrop-filter: blur(8px) !important;
+            border: 1px dashed rgba(107, 115, 255, 0.4) !important;
+            border-radius: 8px !important;
+            padding: 20px 25px !important;
+            color: #ffffff !important;
+            font-size: 1.2rem !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            line-height: 1.5 !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+        }
+
+        #simulator-page .option-btn input {
+            margin-right: 15px !important;
+            transform: scale(1.3) !important;
+            cursor: pointer !important;
+            accent-color: #6b73ff !important;
+        }
+
+        #simulator-page .option-btn:hover {
+            background: rgba(52, 59, 192, 0.4) !important;
+            border-color: #6b73ff !important;
+            box-shadow: 0 0 15px rgba(107, 115, 255, 0.5) !important;
+        }
+
+        #simulator-page .option-btn.selected {
+            background: rgba(52, 59, 192, 0.6) !important;
+            border: 1px solid #6b73ff !important;
+            box-shadow: inset 0 0 10px rgba(107, 115, 255, 0.5) !important;
+        }
+
+        /* Цвета обводки при правильном/неправильном ответе */
+        #simulator-page .option-btn.correct {
+            background: rgba(8, 199, 200, 0.1) !important;
+            border: 2px solid #08C7C8 !important;
+            box-shadow: 0 0 15px rgba(8, 199, 200, 0.4) !important;
+        }
+
+        #simulator-page .option-btn.wrong {
+            background: rgba(207, 74, 176, 0.1) !important;
+            border: 2px solid #CF4AB0 !important;
+            box-shadow: 0 0 15px rgba(207, 74, 176, 0.4) !important;
+        }
+
+        /* Маркеры "Ваш выбор" и "Выбор бота" в кибер-стиле */
+        #simulator-page .badge {
+            position: absolute !important;
+            top: -12px !important;
+            padding: 4px 10px !important;
+            border-radius: 4px !important;
+            color: #ffffff !important;
+            font-size: 0.8rem !important;
+            font-weight: bold !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+            z-index: 10 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        #simulator-page .badge-user { 
+            background: #6b73ff !important;
+            border: 1px solid #7c3fe0 !important;
+            right: 15px !important; 
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.6) !important;
+        }
+
+        #simulator-page .badge-bot { 
+            background: #CF4AB0 !important;
+            border: 1px solid #ff3366 !important;
+            right: 140px !important; 
+            box-shadow: 0 0 10px rgba(207, 74, 176, 0.6) !important;
+        }
+
+        @media (max-width: 600px) {
+            #simulator-page .badge-user {
+                right: 10px !important;
+                font-size: 0.7rem !important;
+                padding: 3px 6px !important;
+            }
+            #simulator-page .badge-bot {
+                right: 95px !important;
+                font-size: 0.7rem !important;
+                padding: 3px 6px !important;
+            }
+        }
+
+</style>
+
+    <style>
+        body {
+            background-color: #171a21;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Jura', sans-serif;
+        }
+    
+        /* Overrides to fix the white boxes and text colors */
+        #simulator-page .option {
+            background-color: #343bc0 !important;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        #simulator-page .option:hover {
+            background-color: #4a51e8 !important;
+            border: none !important;
+            box-shadow: 0 0 15px rgba(52, 59, 192, 0.6) !important;
+        }
+
+        #simulator-page .option.selected {
+            background-color: #2a2f99 !important;
+            border: 2px solid #00ffcc !important;
+            box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.3) !important;
+        }
+
+        #simulator-page .topic-btn {
+            background-color: #343bc0 !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+
+        #simulator-page .topic-btn:hover {
+            background-color: #4a51e8 !important;
+            box-shadow: 0 0 15px rgba(52, 59, 192, 0.6) !important;
+        }
+
+        #simulator-page .question-text, 
+        #simulator-page p, 
+        #simulator-page label {
+            color: #ffffff !important;
+        }
+
+
+        /* Распределение по высоте (Distribution by height) и увеличение читабельности */
+        #simulator-page {
+            align-items: stretch !important;
+            padding: 0 !important;
+        }
+
+        #simulator-page .page-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh !important;
+            padding: 40px 20px !important;
+            margin: 0 auto !important;
+            justify-content: center !important;
+            flex-grow: 1 !important;
+        }
+
+        #simulator-page .container {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+        }
+
+        /* Заставляем активный слайд занимать всё доступное место */
+        #simulator-page .slide.active {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-grow: 1 !important;
+            justify-content: space-between !important;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Увеличиваем размер текстов для лучшей читаемости */
+        #simulator-page .question-text {
+            font-size: 1.5rem !important;
+            line-height: 1.6 !important;
+            margin: 30px 0 !important;
+            flex-grow: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        #simulator-page #simulator-page .options {
+            gap: 15px !important;
+            margin-bottom: 30px !important;
+        }
+
+        #simulator-page .option {
+            font-size: 1.2rem !important;
+            padding: 20px 25px !important;
+            border-radius: 8px !important;
+            line-height: 1.5 !important;
+        }
+
+        #simulator-page .topics-grid {
+            gap: 25px !important;
+            margin: 40px 0 !important;
+        }
+
+        #simulator-page .topic-btn {
+            font-size: 1.3rem !important;
+            padding: 25px !important;
+            border-radius: 8px !important;
+        }
+
+        #simulator-page .bot-message, #simulator-page .round-result-box {
+            margin-top: 20px !important;
+            padding: 25px !important;
+            font-size: 1.1rem !important;
+        }
+
+
+        /* Эффект стекла для плашек (стекломорфизм) */
+        #simulator-page .option-btn {
+            background: rgba(23, 26, 33, 0.6) !important;
+            backdrop-filter: blur(8px) !important;
+            border: 1px dashed rgba(107, 115, 255, 0.4) !important;
+            border-radius: 8px !important;
+            padding: 20px 25px !important;
+            color: #ffffff !important;
+            font-size: 1.2rem !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            line-height: 1.5 !important;
+            position: relative !important;
+            display: flex !important;
+            align-items: center !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+        }
+
+        #simulator-page .option-btn input {
+            margin-right: 15px !important;
+            transform: scale(1.3) !important;
+            cursor: pointer !important;
+            accent-color: #6b73ff !important;
+        }
+
+        #simulator-page .option-btn:hover {
+            background: rgba(52, 59, 192, 0.4) !important;
+            border-color: #6b73ff !important;
+            box-shadow: 0 0 15px rgba(107, 115, 255, 0.5) !important;
+        }
+
+        #simulator-page .option-btn.selected {
+            background: rgba(52, 59, 192, 0.6) !important;
+            border: 1px solid #6b73ff !important;
+            box-shadow: inset 0 0 10px rgba(107, 115, 255, 0.5) !important;
+        }
+
+        /* Цвета обводки при правильном/неправильном ответе */
+        #simulator-page .option-btn.correct {
+            background: rgba(8, 199, 200, 0.1) !important;
+            border: 2px solid #08C7C8 !important;
+            box-shadow: 0 0 15px rgba(8, 199, 200, 0.4) !important;
+        }
+
+        #simulator-page .option-btn.wrong {
+            background: rgba(207, 74, 176, 0.1) !important;
+            border: 2px solid #CF4AB0 !important;
+            box-shadow: 0 0 15px rgba(207, 74, 176, 0.4) !important;
+        }
+
+        /* Маркеры "Ваш выбор" и "Выбор бота" в кибер-стиле */
+        #simulator-page .badge {
+            position: absolute !important;
+            top: -12px !important;
+            padding: 4px 10px !important;
+            border-radius: 4px !important;
+            color: #ffffff !important;
+            font-size: 0.8rem !important;
+            font-weight: bold !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+            z-index: 10 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        #simulator-page .badge-user { 
+            background: #6b73ff !important;
+            border: 1px solid #7c3fe0 !important;
+            right: 15px !important; 
+            box-shadow: 0 0 10px rgba(107, 115, 255, 0.6) !important;
+        }
+
+        #simulator-page .badge-bot { 
+            background: #CF4AB0 !important;
+            border: 1px solid #ff3366 !important;
+            right: 140px !important; 
+            box-shadow: 0 0 10px rgba(207, 74, 176, 0.6) !important;
+        }
+
+        @media (max-width: 600px) {
+            #simulator-page .badge-user {
+                right: 10px !important;
+                font-size: 0.7rem !important;
+                padding: 3px 6px !important;
+            }
+            #simulator-page .badge-bot {
+                right: 95px !important;
+                font-size: 0.7rem !important;
+                padding: 3px 6px !important;
+            }
+        }
+
+</style>
+
+    <style>
+        /* === КНОПКИ ТРЕНАЖЁРА В СТИЛЕ cyber-btn (ВОЙТИ В СИМУЛЯЦИЮ) === */
+        #simulator-page .btn {
+            background: transparent !important;
+            border: 2px solid #7c3fe0 !important;
+            color: #fff !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            font-size: 1.1rem !important;
+            padding: 15px 40px !important;
+            margin-top: 10px !important;
+            cursor: pointer !important;
+            position: relative !important;
+            overflow: hidden !important;
+            transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+            box-shadow: 0 0 15px rgba(124, 63, 224, 0.2) !important;
+            width: 100% !important;
+            border-radius: 0 !important;
+        }
+        #simulator-page .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(107, 115, 255, 0.4), transparent);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+        #simulator-page .btn:hover:not(:disabled) {
+            background: rgba(124, 63, 224, 0.2) !important;
+            box-shadow: 0 0 25px rgba(124, 63, 224, 0.6), inset 0 0 10px rgba(107, 115, 255, 0.4) !important;
+            border-color: #6b73ff !important;
+            text-shadow: 0 0 8px #fff;
+        }
+        #simulator-page .btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+        #simulator-page .btn:disabled {
+            background-color: transparent !important;
+            border: 1px dashed rgba(255,255,255,0.2) !important;
+            color: rgba(255,255,255,0.4) !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+
+        /* === СЧЁТЧИК ВЫ:БОТ В СТИЛЕ НОМЕРА ВОПРОСА === */
+        #simulator-page .scoreboard {
+            font-family: 'Share Tech Mono', monospace !important;
+            font-size: 1rem !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+        }
+        #simulator-page .scoreboard > span {
+            background: linear-gradient(90deg, #6b73ff, #7c3fe0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        #simulator-page .score-number {
+            font-size: 1.7rem !important;
+            font-weight: 700 !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            background: linear-gradient(90deg, #6b73ff, #7c3fe0) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            line-height: 1 !important;
+            display: inline-block !important;
+        }
+    </style>
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <style>
+        /* === СЛАЙД ВЫБОРА РЕЖИМА === */
+        #mode-slide .mode-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        #invite-link-box {
+            margin-top: 25px;
+            text-align: center;
+            display: none;
+        }
+        #invite-link-box p {
+            font-family: 'Share Tech Mono', monospace;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        #invite-link-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        #invite-url {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            color: #6b73ff;
+            background: rgba(107,115,255,0.08);
+            border: 1px dashed rgba(107,115,255,0.4);
+            padding: 10px 16px;
+            word-break: break-all;
+            max-width: 500px;
+            cursor: pointer;
+        }
+        #copy-btn {
+            background: transparent;
+            border: 1px solid #7c3fe0;
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            padding: 10px 18px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        #copy-btn:hover { background: rgba(124,63,224,0.3); box-shadow: 0 0 12px rgba(124,63,224,0.5); }
+        #waiting-status {
+            margin-top: 18px;
+            font-family: 'Share Tech Mono', monospace;
+            color: #6b73ff;
+            font-size: 0.95rem;
+            text-align: center;
+            display: none;
+        }
+        .waiting-dot { animation: blinker 1.2s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0.2; } }
+        /* Оппонент-бейдж переименование в режиме коллеги */
+        .opponent-label { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+
+    <div id="landing-page" style="display: flex;">
+        
+
+    <div class="scanline"></div>
+
+    <div class="container">
+        <!-- Блок терминала (эффект печатной машинки) -->
+        <div class="terminal-header" id="term-header"></div>
+
+        <!-- Основной контент -->
+        <div class="content-box" id="main-content">
+            <h1 class="gradient-text">Приветствую в рядах Корпорации, Агент.</h1>
+
+            <p>Забудь всё, что ты знал раньше. Впереди долгий путь, и выживут на нём только те, кто способен быстро учиться и адаптироваться к системе. Твоя подготовка начинается прямо сейчас.</p>
+
+            <h2 class="accent-blue">Твоя арена — Интеллектуальные поединки</h2>
+            <p>Побеждая в симуляциях, ты будешь фармить <span class="highlight">токены</span> — нашу внутреннюю валюту. На эти ресурсы ты сможешь покупать на теневом рынке продвинутый софт и базовых ИИ-ассистентов.</p>
+            <p>Тебе предстоит обучать их с нуля, прокачивая нейронные связи. Вскоре эти алгоритмы станут твоим личным <span class="highlight">боевым отрядом</span>, без которого не выжить в реальной операции.</p>
+
+            <h2 class="accent-purple">Миссия: Глубокое внедрение</h2>
+            <p>Когда отряд будет готов, мы отправим тебя за периметр. Твоя задача — проникнуть на территорию Конкурента и внедриться в их структуру. Чтобы обойти их «социальные фаерволы», тебе придется впитать огромный массив знаний. Ты должен думать, как они. Действовать, как они. Стать их идеальной копией.</p>
+
+            <h2 class="gradient-text">Вершина мастерства — Архитектор</h2>
+            <p>Пройдя по их карьерной лестнице, ты получишь доступ к ядру их инфраструктуры. Ты станешь нашим «спящим агентом», интегрированным в их ДНК.</p>
+            <p>По команде мы нанесем удар. Действуя изнутри, мы парализуем их процессы, обрушим их системы и выкачаем все ресурсы и профит. Конкурент будет поглощен, а Корпорация заберет этот рынок себе.</p>
+
+            <div class="launch-sequence">
+                <p class="system-msg">Твой первый противник уже сгенерирован.</p>
+                <p class="system-msg blink">Готов начать загрузку?</p>
+                <!-- КНОПКА ПЕРЕХОДА -->
+                <!-- Для Тильды можно заменить onclick="document.getElementById('landing-page').style.display='none'; document.getElementById('simulator-page').style.display='flex'; window.scrollTo(0,0);" -->
+                <button class="cyber-btn" onclick="document.getElementById('landing-page').style.display='none'; document.getElementById('simulator-page').style.display='flex'; window.scrollTo(0,0);">
+                    [ ВОЙТИ В СИМУЛЯЦИЮ ]
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Скрипт эффекта "печатной машинки" для терминала
+        const lines = [
+            "[ ТЕРМИНАЛ АКТИВИРОВАН... ]",
+            "[ АВТОРИЗАЦИЯ: УСПЕШНО ]",
+            "[ СТАТУС ПОЛЬЗОВАТЕЛЯ: НОВИЧОК ]"
+        ];
+
+        let currentLine = 0;
+        let currentChar = 0;
+        const container = document.getElementById('term-header');
+
+        function typeWriter() {
+            if (currentLine < lines.length) {
+                if (currentChar === 0) {
+                    container.innerHTML += '<div id="line' + currentLine + '" class="term-line"></div>';
+                }
+                const lineEl = document.getElementById('line' + currentLine);
+                lineEl.innerHTML += lines[currentLine].charAt(currentChar);
+                currentChar++;
+
+                // Скорость печати (в мс)
+                if (currentChar < lines[currentLine].length) {
+                    setTimeout(typeWriter, 35);
+                } else {
+                    currentLine++;
+                    currentChar = 0;
+                    // Пауза между строками
+                    setTimeout(typeWriter, 400);
+                }
+            } else {
+                // Когда терминал закончил печатать, плавно показываем основной контент
+                setTimeout(function() {
+                    document.getElementById('main-content').classList.add('visible');
+                }, 300);
+            }
+        }
+
+        // Запуск при загрузке страницы
+        window.onload = typeWriter;
+    </script>
+
+
+    </div>
+
+    <!-- Тренажер выровнен точно по центру как на лендинге -->
+    <div id="simulator-page" style="display: none; align-items: stretch; min-height: 100vh; padding: 0;">
+        
+    
+    <div class="page-wrapper">
+        <div class="terminal-header">
+            <div class="term-line">[ ТЕРМИНАЛ АКТИВИРОВАН... ]</div>
+            <div class="term-line">[ СИМУЛЯЦИЯ ПОЕДИНКА ИНИЦИАЛИЗИРОВАНА ]</div>
+            <div class="term-line">[ ОЖИДАНИЕ ВВОДА АГЕНТА... ]</div>
+        </div>
+
+        <div class="container">
+
+    <div class="header">
+        <div class="header-title" id="header-text">Режим поединка</div>
+        <div class="scoreboard" id="scoreboard" style="display: none;">
+            <span>Вы</span>
+            <span class="score-number" id="score-user">0</span>
+            <span>:</span>
+            <span class="score-number" id="score-bot">0</span>
+            <span>Бот</span>
+        </div>
+    </div>
+    
+    <div class="content">
+        
+        <!-- Экран выбора темы -->
+        <div id="topic-slide" class="slide active result-screen">
+            <h2>Выбор темы поединка</h2>
+            <p>Выберите банк вопросов, по которому пройдет состязание:</p>
+            <div class="options" id="topic-options">
+                <!-- Опции тем генерируются через JS -->
+            </div>
+        </div>
+
+                <!-- Слайд выбора режима -->
+        <div id="mode-slide" class="slide result-screen">
+            <h2>Выбор режима поединка</h2>
+            <p>Сразиться с Роботом или бросить вызов коллеге?</p>
+            <div class="mode-btns">
+                <button class="btn" onclick="chooseBot()">⚙ Поединок с Ботом</button>
+                <button class="btn" onclick="chooseColleague()">⚡ Поединок с Коллегой</button>
+            </div>
+            <!-- Блок с приглашением (появляется после выбора "коллега") -->
+            <div id="invite-link-box">
+                <p>[ ССЫЛКА-ПРИГЛАШЕНИЕ СГЕНЕРИРОВАНА — отправь коллеге ]</p>
+                <div id="invite-link-wrap">
+                    <div id="invite-url">генерация...</div>
+                    <button id="copy-btn" onclick="copyInviteLink()">📋 Скопировать</button>
+                </div>
+                <div id="waiting-status">
+                    Ожидаем подключения коллеги<span class="waiting-dot">...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Стартовый экран (инструкция) -->
+        <div id="start-slide" class="slide result-screen">
+
+            <h2>Поединок с Роботом</h2>
+            <p>Вы выбрали режим соревновательного поединка. Робот отвечает мгновенно и почти не ошибается. Скорость ответа не важна — играем пошагово.</p>
+            <button class="btn" onclick="startQuiz()">Начать поединок</button>
+        </div>
+
+        <!-- Контейнер для вопросов -->
+        <div id="quiz-slide" class="slide">
+            <div class="question-text" id="question-text">Текст вопроса будет здесь</div>
+            <div class="options" id="options-container">
+                <!-- Кнопки генерируются через JS -->
+            
+            </div>
+            <button class="btn" id="submit-answer-btn" onclick="submitAnswer()" style="margin-top: 20px; width: 100%; display: none;" disabled>Ответить</button>
+
+            <!-- Плашка с результатами раунда (появляется после ответа) -->
+
+            <div class="round-result" id="round-result-box" style="display: none;">
+                <h3 id="round-title">Результат ответа</h3>
+                <p id="round-desc">Описание</p>
+                <button class="btn" id="next-btn" class="cyber-btn" onclick="nextQuestion()">Следующий вопрос ➔</button>
+            </div>
+        </div>
+
+        <!-- Экран результатов -->
+        <div id="result-slide" class="slide result-screen">
+            <h2>Раунд (поединок) завершен!</h2>
+            <div class="final-winner" id="final-winner-text">Вы выиграли!</div>
+            <p id="result-text">Итоговый счет.</p>
+            <button class="btn" onclick="resetGame()">Сыграть реванш</button>
+        </div>
+    </div>
+</div>
+
+    <script>
+
+    const allBanks = {
+    "Тайм-менеджмент": [
+        {
+            "text": "Тайм-менеджмент — это прежде всего:",
+            "options": [
+                {
+                    "text": "Умение работать как можно быстрее",
+                    "correct": false
+                },
+                {
+                    "text": "Осознанное планирование и управление своим временем для достижения целей с максимальной эффективностью",
+                    "correct": true
+                },
+                {
+                    "text": "Способность выполнять несколько задач одновременно",
+                    "correct": false
+                },
+                {
+                    "text": "Инструмент контроля за действиями подчинённых",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Согласно матрице Эйзенхауэра, задачи категории «Важно, но не срочно» следует:",
+            "options": [
+                {
+                    "text": "Делегировать другим сотрудникам",
+                    "correct": false
+                },
+                {
+                    "text": "Выполнять немедленно, бросив всё остальное",
+                    "correct": false
+                },
+                {
+                    "text": "Запланировать и выполнить в отведённое время",
+                    "correct": true
+                },
+                {
+                    "text": "Исключить из списка задач как второстепенные",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие задачи согласно матрице Эйзенхауэра рекомендуется делегировать?",
+            "options": [
+                {
+                    "text": "Важные и срочные задачи",
+                    "correct": false
+                },
+                {
+                    "text": "Неважные, но срочные задачи",
+                    "correct": true
+                },
+                {
+                    "text": "Важные, но несрочные задачи",
+                    "correct": false
+                },
+                {
+                    "text": "Неважные и несрочные задачи",
+                    "correct": false
+                },
+                {
+                    "text": "Любые задачи, которые может выполнить другой человек не хуже вас",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "В чём заключается суть метода «Помодоро»?",
+            "options": [
+                {
+                    "text": "Работа без перерывов в течение всего рабочего дня для максимальной продуктивности",
+                    "correct": false
+                },
+                {
+                    "text": "Чередование 25-минутных рабочих интервалов с 5-минутными перерывами",
+                    "correct": true
+                },
+                {
+                    "text": "Выполнение самой сложной задачи в конце рабочего дня",
+                    "correct": false
+                },
+                {
+                    "text": "Планирование задач по степени их срочности",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных явлений относятся к основным «поглотителям времени» (хронофагам)?",
+            "options": [
+                {
+                    "text": "Незапланированные долгие разговоры",
+                    "correct": true
+                },
+                {
+                    "text": "Чёткая постановка целей в начале дня",
+                    "correct": false
+                },
+                {
+                    "text": "Бесконтрольное использование социальных сетей",
+                    "correct": true
+                },
+                {
+                    "text": "Отсутствие приоритетов в списке задач",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярное планирование рабочей недели",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Принцип Парето (правило 80/20) в контексте тайм-менеджмента означает:",
+            "options": [
+                {
+                    "text": "80% рабочего времени нужно посвящать совещаниям",
+                    "correct": false
+                },
+                {
+                    "text": "20% наиболее важных задач приносят 80% результата",
+                    "correct": true
+                },
+                {
+                    "text": "80% задач должны быть делегированы",
+                    "correct": false
+                },
+                {
+                    "text": "Рабочий день должен быть спланирован на 80%",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что означает «съесть лягушку» в системе тайм-менеджмента Брайана Трейси?",
+            "options": [
+                {
+                    "text": "Отложить самое сложное дело на конец дня",
+                    "correct": false
+                },
+                {
+                    "text": "Разбить большую задачу на маленькие подзадачи",
+                    "correct": false
+                },
+                {
+                    "text": "Начать рабочий день с выполнения самой неприятной или сложной задачи",
+                    "correct": true
+                },
+                {
+                    "text": "Делегировать все рутинные задачи",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие принципы лежат в основе метода GTD (Getting Things Done) Дэвида Аллена?",
+            "options": [
+                {
+                    "text": "Выгружать все задачи и идеи из головы в надёжную внешнюю систему",
+                    "correct": true
+                },
+                {
+                    "text": "Выполнять задачи исключительно в порядке их поступления",
+                    "correct": false
+                },
+                {
+                    "text": "Если задача занимает менее 2 минут — выполнить её немедленно",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярно пересматривать и обновлять список задач",
+                    "correct": true
+                },
+                {
+                    "text": "Держать все задачи в памяти для лучшей концентрации",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Закон Паркинсона в тайм-менеджменте гласит:",
+            "options": [
+                {
+                    "text": "Чем больше задач, тем выше продуктивность",
+                    "correct": false
+                },
+                {
+                    "text": "Работа занимает всё время, которое на неё отведено",
+                    "correct": true
+                },
+                {
+                    "text": "Срочные задачи всегда важнее несрочных",
+                    "correct": false
+                },
+                {
+                    "text": "Делегирование снижает качество работы",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Сотрудник постоянно откладывает выполнение важного проекта, занимаясь мелкими задачами. Как называется это явление?",
+            "options": [
+                {
+                    "text": "Делегирование",
+                    "correct": false
+                },
+                {
+                    "text": "Прокрастинация",
+                    "correct": true
+                },
+                {
+                    "text": "Декомпозиция",
+                    "correct": false
+                },
+                {
+                    "text": "Тайм-боксинг",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие методы помогают эффективно бороться с прокрастинацией?",
+            "options": [
+                {
+                    "text": "Декомпозиция большой задачи на мелкие конкретные шаги",
+                    "correct": true
+                },
+                {
+                    "text": "Ожидание подходящего настроения и вдохновения",
+                    "correct": false
+                },
+                {
+                    "text": "Установка чётких дедлайнов для каждого этапа работы",
+                    "correct": true
+                },
+                {
+                    "text": "Устранение отвлекающих факторов в рабочей среде",
+                    "correct": true
+                },
+                {
+                    "text": "Одновременное начало всех накопившихся задач",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое «тайм-боксинг»?",
+            "options": [
+                {
+                    "text": "Хаотичное распределение задач в течение дня",
+                    "correct": false
+                },
+                {
+                    "text": "Назначение фиксированных временных блоков для выполнения конкретных задач",
+                    "correct": true
+                },
+                {
+                    "text": "Метод оценки задач по уровню их сложности",
+                    "correct": false
+                },
+                {
+                    "text": "Приём для ускоренного чтения деловых документов",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие характеристики должна иметь правильно поставленная цель по методу SMART?",
+            "options": [
+                {
+                    "text": "Конкретная (Specific)",
+                    "correct": true
+                },
+                {
+                    "text": "Вдохновляющая (Inspiring)",
+                    "correct": false
+                },
+                {
+                    "text": "Измеримая (Measurable)",
+                    "correct": true
+                },
+                {
+                    "text": "Достижимая (Achievable)",
+                    "correct": true
+                },
+                {
+                    "text": "Ограниченная по времени (Time-bound)",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Менеджер каждое утро составляет список из 6 важнейших задач на день и выполняет их строго по очереди. Какой метод он использует?",
+            "options": [
+                {
+                    "text": "Метод Помодоро",
+                    "correct": false
+                },
+                {
+                    "text": "Метод Айви Ли",
+                    "correct": true
+                },
+                {
+                    "text": "Матрица Эйзенхауэра",
+                    "correct": false
+                },
+                {
+                    "text": "Метод GTD",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что из перечисленного является признаком эффективного делегирования?",
+            "options": [
+                {
+                    "text": "Передача задачи без объяснения ожидаемого результата",
+                    "correct": false
+                },
+                {
+                    "text": "Делегирование только тех задач, которые не нравятся руководителю",
+                    "correct": false
+                },
+                {
+                    "text": "Передача задачи с чётким описанием цели, ресурсов, сроков и критериев качества",
+                    "correct": true
+                },
+                {
+                    "text": "Постоянный микроменеджмент после передачи задачи",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие факторы снижают личную продуктивность и эффективное управление временем?",
+            "options": [
+                {
+                    "text": "Многозадачность (параллельное выполнение нескольких дел)",
+                    "correct": true
+                },
+                {
+                    "text": "Отсутствие письменного плана на день",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярные короткие перерывы в работе",
+                    "correct": false
+                },
+                {
+                    "text": "Перфекционизм, не позволяющий завершить задачи",
+                    "correct": true
+                },
+                {
+                    "text": "Приоритизация задач в начале рабочего дня",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Согласно исследованиям, переключение между задачами (многозадачность) приводит к:",
+            "options": [
+                {
+                    "text": "Повышению общей продуктивности на 40%",
+                    "correct": false
+                },
+                {
+                    "text": "Снижению качества выполнения каждой задачи и потере до 40% рабочего времени",
+                    "correct": true
+                },
+                {
+                    "text": "Развитию навыков концентрации",
+                    "correct": false
+                },
+                {
+                    "text": "Более быстрому достижению всех поставленных целей",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие инструменты относятся к методам планирования рабочего времени?",
+            "options": [
+                {
+                    "text": "Диаграмма Ганта",
+                    "correct": true
+                },
+                {
+                    "text": "Матрица Эйзенхауэра",
+                    "correct": true
+                },
+                {
+                    "text": "SWOT-анализ",
+                    "correct": false
+                },
+                {
+                    "text": "Список задач с приоритетами (To-Do List)",
+                    "correct": true
+                },
+                {
+                    "text": "Тайм-боксинг в календаре",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Руководитель замечает, что его рабочий день постоянно занят срочными задачами, на стратегические цели времени не остаётся. Это называется:",
+            "options": [
+                {
+                    "text": "Эффективным антикризисным управлением",
+                    "correct": false
+                },
+                {
+                    "text": "«Ловушкой срочности» или «тиранией срочного»",
+                    "correct": true
+                },
+                {
+                    "text": "Оптимальным управлением ресурсами",
+                    "correct": false
+                },
+                {
+                    "text": "Правильным применением принципа Парето",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие привычки характерны для людей с высокой личной эффективностью в управлении временем?",
+            "options": [
+                {
+                    "text": "Еженедельный обзор и корректировка планов",
+                    "correct": true
+                },
+                {
+                    "text": "Планирование следующего дня накануне вечером",
+                    "correct": true
+                },
+                {
+                    "text": "Реакция на все входящие сообщения немедленно, независимо от их важности",
+                    "correct": false
+                },
+                {
+                    "text": "Выделение в расписании «защищённого времени» для глубокой работы",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярная оценка того, на что фактически уходит время (хронометраж)",
+                    "correct": true
+                }
+            ]
+        }
+    ],
+    "Управление конфликтами": [
+        {
+            "text": "Конфликт в организации — это прежде всего:",
+            "options": [
+                {
+                    "text": "Всегда деструктивное явление, которое необходимо немедленно подавлять",
+                    "correct": false
+                },
+                {
+                    "text": "Столкновение противоположных интересов, целей или ценностей, требующее разрешения",
+                    "correct": true
+                },
+                {
+                    "text": "Признак некомпетентности руководителя",
+                    "correct": false
+                },
+                {
+                    "text": "Исключительно личная неприязнь между сотрудниками",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных видов конфликтов выделяются в организационной психологии?",
+            "options": [
+                {
+                    "text": "Внутриличностный конфликт",
+                    "correct": true
+                },
+                {
+                    "text": "Межличностный конфликт",
+                    "correct": true
+                },
+                {
+                    "text": "Финансовый конфликт",
+                    "correct": false
+                },
+                {
+                    "text": "Конфликт между личностью и группой",
+                    "correct": true
+                },
+                {
+                    "text": "Межгрупповой конфликт",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Согласно модели Томаса–Килманна, какая стратегия поведения в конфликте предполагает высокую нацеленность как на собственные интересы, так и на интересы другой стороны?",
+            "options": [
+                {
+                    "text": "Уклонение",
+                    "correct": false
+                },
+                {
+                    "text": "Приспособление",
+                    "correct": false
+                },
+                {
+                    "text": "Сотрудничество",
+                    "correct": true
+                },
+                {
+                    "text": "Компромисс",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие стратегии поведения в конфликте выделяет модель Томаса–Килманна?",
+            "options": [
+                {
+                    "text": "Соперничество (конкуренция)",
+                    "correct": true
+                },
+                {
+                    "text": "Сотрудничество",
+                    "correct": true
+                },
+                {
+                    "text": "Манипуляция",
+                    "correct": false
+                },
+                {
+                    "text": "Компромисс",
+                    "correct": true
+                },
+                {
+                    "text": "Уклонение",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Сотрудник в ответ на критику руководителя замолкает, соглашается внешне, но намеренно затягивает выполнение задания. Какую стратегию поведения он демонстрирует?",
+            "options": [
+                {
+                    "text": "Сотрудничество",
+                    "correct": false
+                },
+                {
+                    "text": "Компромисс",
+                    "correct": false
+                },
+                {
+                    "text": "Уклонение с элементами пассивной агрессии",
+                    "correct": true
+                },
+                {
+                    "text": "Открытое соперничество",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое «позиция» в конфликте в отличие от «интереса»?",
+            "options": [
+                {
+                    "text": "Позиция — это то, чего человек хочет на самом деле; интерес — то, что он заявляет публично",
+                    "correct": false
+                },
+                {
+                    "text": "Позиция — это конкретное требование, которое человек выдвигает; интерес — глубинная потребность, стоящая за этим требованием",
+                    "correct": true
+                },
+                {
+                    "text": "Позиция и интерес — синонимы в управлении конфликтами",
+                    "correct": false
+                },
+                {
+                    "text": "Интерес — это юридическое понятие, не применяемое в переговорах",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие факторы чаще всего становятся причинами конфликтов в рабочем коллективе?",
+            "options": [
+                {
+                    "text": "Нечёткое распределение зон ответственности",
+                    "correct": true
+                },
+                {
+                    "text": "Конкуренция за ограниченные ресурсы",
+                    "correct": true
+                },
+                {
+                    "text": "Высокий профессионализм всех сотрудников",
+                    "correct": false
+                },
+                {
+                    "text": "Различия в ценностях и стилях работы",
+                    "correct": true
+                },
+                {
+                    "text": "Накопившиеся невысказанные претензии",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "На каком этапе развития конфликта наиболее эффективно вмешательство и его разрешение?",
+            "options": [
+                {
+                    "text": "На этапе открытого противостояния, когда обе стороны высказали все претензии",
+                    "correct": false
+                },
+                {
+                    "text": "На этапе скрытого напряжения, до перехода в открытую фазу",
+                    "correct": true
+                },
+                {
+                    "text": "После завершения конфликта, для предотвращения следующего",
+                    "correct": false
+                },
+                {
+                    "text": "Только после вмешательства руководства",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Два коллеги спорят о сроках проекта: один настаивает на двух неделях, другой — на месяце. Они договорились на трёх неделях. Какую стратегию они использовали?",
+            "options": [
+                {
+                    "text": "Сотрудничество",
+                    "correct": false
+                },
+                {
+                    "text": "Соперничество",
+                    "correct": false
+                },
+                {
+                    "text": "Компромисс",
+                    "correct": true
+                },
+                {
+                    "text": "Приспособление",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие техники помогают de-escalate (снизить накал) конфликта в момент острого противостояния?",
+            "options": [
+                {
+                    "text": "Активное слушание и перефразирование позиции собеседника",
+                    "correct": true
+                },
+                {
+                    "text": "Немедленное выдвижение ультиматумов",
+                    "correct": false
+                },
+                {
+                    "text": "Временная пауза для снижения эмоционального напряжения",
+                    "correct": true
+                },
+                {
+                    "text": "Использование «Я-высказываний» вместо обвинений",
+                    "correct": true
+                },
+                {
+                    "text": "Привлечение как можно большего числа свидетелей конфликта",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое медиация в контексте управления конфликтами?",
+            "options": [
+                {
+                    "text": "Судебное разбирательство между конфликтующими сторонами",
+                    "correct": false
+                },
+                {
+                    "text": "Процесс, в котором нейтральная третья сторона помогает конфликтующим сторонам прийти к взаимоприемлемому решению",
+                    "correct": true
+                },
+                {
+                    "text": "Метод подавления конфликта административными мерами",
+                    "correct": false
+                },
+                {
+                    "text": "Способ избежать конфликта путём молчаливого согласия",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие характеристики отличают конструктивный конфликт от деструктивного?",
+            "options": [
+                {
+                    "text": "Стороны сосредоточены на решении проблемы, а не на личных нападках",
+                    "correct": true
+                },
+                {
+                    "text": "В результате конфликта улучшается взаимопонимание и качество решений",
+                    "correct": true
+                },
+                {
+                    "text": "Конфликт сопровождается угрозами и личными оскорблениями",
+                    "correct": false
+                },
+                {
+                    "text": "Стороны готовы выслушать и учесть аргументы друг друга",
+                    "correct": true
+                },
+                {
+                    "text": "Конфликт приводит к разрушению рабочих отношений",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Руководитель замечает конфликт между двумя отделами из-за дублирующихся зон ответственности. Наиболее эффективное долгосрочное решение:",
+            "options": [
+                {
+                    "text": "Уволить наиболее конфликтных сотрудников",
+                    "correct": false
+                },
+                {
+                    "text": "Провести единоразовый тренинг по командообразованию",
+                    "correct": false
+                },
+                {
+                    "text": "Пересмотреть и чётко зафиксировать зоны ответственности каждого отдела",
+                    "correct": true
+                },
+                {
+                    "text": "Игнорировать конфликт, пока он не затронул результаты работы",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какая стратегия по Томасу–Килманну уместна, когда вопрос малозначим для вас, но крайне важен для другой стороны?",
+            "options": [
+                {
+                    "text": "Соперничество",
+                    "correct": false
+                },
+                {
+                    "text": "Приспособление",
+                    "correct": true
+                },
+                {
+                    "text": "Компромисс",
+                    "correct": false
+                },
+                {
+                    "text": "Уклонение",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие действия руководителя способствуют профилактике конфликтов в команде?",
+            "options": [
+                {
+                    "text": "Прозрачное информирование сотрудников о решениях и их причинах",
+                    "correct": true
+                },
+                {
+                    "text": "Чёткое распределение ролей и ответственности",
+                    "correct": true
+                },
+                {
+                    "text": "Поощрение конкуренции между сотрудниками за одни и те же ресурсы",
+                    "correct": false
+                },
+                {
+                    "text": "Создание условий для открытого высказывания разногласий",
+                    "correct": true
+                },
+                {
+                    "text": "Единые и последовательно применяемые правила для всей команды",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Сотрудник говорит коллеге: «Когда ты перебиваешь меня на совещании, я чувствую, что моё мнение не ценится, и мне сложно донести свою мысль». Какую технику он использует?",
+            "options": [
+                {
+                    "text": "Пассивно-агрессивную провокацию",
+                    "correct": false
+                },
+                {
+                    "text": "«Я-высказывание» для выражения своей позиции без обвинений",
+                    "correct": true
+                },
+                {
+                    "text": "Скрытую манипуляцию чувством вины",
+                    "correct": false
+                },
+                {
+                    "text": "Ультиматум",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что характерно для стратегии «уклонение» в конфликте по модели Томаса–Килманна?",
+            "options": [
+                {
+                    "text": "Низкая нацеленность на собственные интересы",
+                    "correct": true
+                },
+                {
+                    "text": "Намеренное откладывание решения проблемы",
+                    "correct": true
+                },
+                {
+                    "text": "Активный поиск взаимовыгодного выхода",
+                    "correct": false
+                },
+                {
+                    "text": "Физическое или психологическое дистанцирование от конфликта",
+                    "correct": true
+                },
+                {
+                    "text": "Низкая нацеленность на интересы другой стороны",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Что такое BATNA в переговорах при конфликте?",
+            "options": [
+                {
+                    "text": "Лучшая альтернатива обсуждаемому соглашению — то, на что вы можете опереться, если переговоры зайдут в тупик",
+                    "correct": true
+                },
+                {
+                    "text": "Список требований, предъявляемых другой стороне",
+                    "correct": false
+                },
+                {
+                    "text": "Метод оценки виновности сторон конфликта",
+                    "correct": false
+                },
+                {
+                    "text": "Протокол фиксации итогов переговоров",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие признаки указывают на то, что конфликт перешёл в деструктивную фазу?",
+            "options": [
+                {
+                    "text": "Стороны перестают слышать аргументы друг друга",
+                    "correct": true
+                },
+                {
+                    "text": "Обсуждение переходит с проблемы на личные качества участников",
+                    "correct": true
+                },
+                {
+                    "text": "Стороны активно ищут общие интересы",
+                    "correct": false
+                },
+                {
+                    "text": "Конфликт начинает вовлекать посторонних людей и отделы",
+                    "correct": true
+                },
+                {
+                    "text": "Участники демонстрируют готовность к уступкам",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какой подход к разрешению конфликта описывается принципом «выиграл–выиграл» (Win–Win)?",
+            "options": [
+                {
+                    "text": "Одна сторона полностью уступает другой для сохранения мира",
+                    "correct": false
+                },
+                {
+                    "text": "Обе стороны находят решение, которое в достаточной мере удовлетворяет интересы каждой из них",
+                    "correct": true
+                },
+                {
+                    "text": "Конфликт разрешается через голосование большинством",
+                    "correct": false
+                },
+                {
+                    "text": "Победившая сторона получает все преимущества, проигравшая — ничего",
+                    "correct": false
+                }
+            ]
+        }
+    ],
+    "Ассертивное поведение": [
+        {
+            "text": "Ассертивность — это прежде всего:",
+            "options": [
+                {
+                    "text": "Умение всегда настоять на своём",
+                    "correct": false
+                },
+                {
+                    "text": "Способность выражать свои мысли и потребности уверенно и уважительно, не нарушая прав других",
+                    "correct": true
+                },
+                {
+                    "text": "Избегание конфликтов любой ценой",
+                    "correct": false
+                },
+                {
+                    "text": "Способность подчиняться авторитетам",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Кто из исследователей в 1970-х годах популяризировал концепцию ассертивности как философию личной ответственности?",
+            "options": [
+                {
+                    "text": "Зигмунд Фрейд и Карл Юнг",
+                    "correct": false
+                },
+                {
+                    "text": "Роберт Альберти и Мануэль Смит",
+                    "correct": true
+                },
+                {
+                    "text": "Аарон Бек и Альберт Эллис",
+                    "correct": false
+                },
+                {
+                    "text": "Дейл Карнеги и Стивен Кови",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных характеристик относятся к ассертивному стилю общения?",
+            "options": [
+                {
+                    "text": "Прямое и честное выражение своей позиции",
+                    "correct": true
+                },
+                {
+                    "text": "Уважение прав собеседника",
+                    "correct": true
+                },
+                {
+                    "text": "Перекладывание ответственности на других",
+                    "correct": false
+                },
+                {
+                    "text": "Использование «Я-высказываний» вместо обвинений",
+                    "correct": true
+                },
+                {
+                    "text": "Подавление собственных эмоций ради сохранения мира",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Чем ассертивное поведение принципиально отличается от агрессивного?",
+            "options": [
+                {
+                    "text": "Ассертивный человек никогда не отстаивает свою позицию",
+                    "correct": false
+                },
+                {
+                    "text": "Ассертивный человек достигает своих целей, уважая при этом права и границы других людей",
+                    "correct": true
+                },
+                {
+                    "text": "Агрессивный человек всегда добивается лучших результатов",
+                    "correct": false
+                },
+                {
+                    "text": "Ассертивный человек избегает любых разногласий",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Сотрудник не согласен с решением руководителя. Какой ответ является примером ассертивного поведения?",
+            "options": [
+                {
+                    "text": "Молча выполнить задание, затаив обиду",
+                    "correct": false
+                },
+                {
+                    "text": "Громко заявить коллегам, что руководитель некомпетентен",
+                    "correct": false
+                },
+                {
+                    "text": "Аргументированно выразить несогласие руководителю лично и предложить альтернативу",
+                    "correct": true
+                },
+                {
+                    "text": "Полностью отказаться от выполнения задания",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных прав входят в «Билль о правах ассертивной личности» по Мануэлю Смиту?",
+            "options": [
+                {
+                    "text": "Право оценивать собственное поведение и нести ответственность за его последствия",
+                    "correct": true
+                },
+                {
+                    "text": "Право требовать от других изменить их поведение",
+                    "correct": false
+                },
+                {
+                    "text": "Право сказать «Я не знаю» и «Я не понимаю»",
+                    "correct": true
+                },
+                {
+                    "text": "Право изменить своё мнение",
+                    "correct": true
+                },
+                {
+                    "text": "Право всегда получать то, чего хочешь",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Пассивно-агрессивное поведение — это:",
+            "options": [
+                {
+                    "text": "Открытое и честное выражение недовольства",
+                    "correct": false
+                },
+                {
+                    "text": "Косвенное проявление злости через игнорирование, уклонение и скрытый саботаж",
+                    "correct": true
+                },
+                {
+                    "text": "Уверенное отстаивание своей позиции",
+                    "correct": false
+                },
+                {
+                    "text": "Полное принятие позиции собеседника",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какой из перечисленных речевых приёмов является ключевым инструментом ассертивной коммуникации?",
+            "options": [
+                {
+                    "text": "Обобщения: «Ты всегда так делаешь»",
+                    "correct": false
+                },
+                {
+                    "text": "«Я-высказывания»: «Я чувствую… когда…»",
+                    "correct": true
+                },
+                {
+                    "text": "Риторические вопросы: «Ну разве это нормально?»",
+                    "correct": false
+                },
+                {
+                    "text": "Сравнения с другими: «Все остальные справляются»",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Коллега просит вас взять на себя его срочную задачу, хотя у вас и так полная загрузка. Ассертивный ответ — это:",
+            "options": [
+                {
+                    "text": "«Ладно, справлюсь как-нибудь» (и злиться внутри)",
+                    "correct": false
+                },
+                {
+                    "text": "«Не буду помогать тебе никогда!»",
+                    "correct": false
+                },
+                {
+                    "text": "«У меня сейчас нет возможности взять эту задачу — у меня свои дедлайны. Давай обсудим с руководителем, как перераспределить нагрузку»",
+                    "correct": true
+                },
+                {
+                    "text": "Молча взять задачу, не говоря ничего",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что характерно для пассивного (покорного) стиля поведения?",
+            "options": [
+                {
+                    "text": "Неспособность защитить собственные права и интересы",
+                    "correct": true
+                },
+                {
+                    "text": "Избегание конфликтов путём подчинения воле других",
+                    "correct": true
+                },
+                {
+                    "text": "Чёткое и уверенное выражение своей позиции",
+                    "correct": false
+                },
+                {
+                    "text": "Накопление невысказанных обид и раздражения",
+                    "correct": true
+                },
+                {
+                    "text": "Уважение к правам и границам собеседника",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Ассертивный человек, совершив ошибку, как правило:",
+            "options": [
+                {
+                    "text": "Отрицает ошибку и перекладывает вину на других",
+                    "correct": false
+                },
+                {
+                    "text": "Признаёт ошибку, берёт ответственность и ищет решение",
+                    "correct": true
+                },
+                {
+                    "text": "Испытывает длительное чувство вины и стыда",
+                    "correct": false
+                },
+                {
+                    "text": "Игнорирует произошедшее",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какой стиль поведения предполагает удовлетворение только своих потребностей за счёт игнорирования нужд и прав других?",
+            "options": [
+                {
+                    "text": "Ассертивный",
+                    "correct": false
+                },
+                {
+                    "text": "Пассивный",
+                    "correct": false
+                },
+                {
+                    "text": "Агрессивный",
+                    "correct": true
+                },
+                {
+                    "text": "Манипулятивный",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Исследования показывают, что развитие навыков ассертивности связано с:",
+            "options": [
+                {
+                    "text": "Снижением симптомов тревоги и депрессии",
+                    "correct": true
+                },
+                {
+                    "text": "Улучшением межличностных отношений",
+                    "correct": true
+                },
+                {
+                    "text": "Повышением агрессивности в конфликтах",
+                    "correct": false
+                },
+                {
+                    "text": "Повышением самооценки и уверенности в себе",
+                    "correct": true
+                },
+                {
+                    "text": "Полным устранением любых разногласий с окружающими",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "На совещании коллега перебивает вас на полуслове. Ассертивная реакция — это:",
+            "options": [
+                {
+                    "text": "Замолчать и не продолжать мысль",
+                    "correct": false
+                },
+                {
+                    "text": "Резко накричать: «Дай мне договорить!»",
+                    "correct": false
+                },
+                {
+                    "text": "Спокойно сказать: «Я хотел бы закончить свою мысль, а затем услышу твоё мнение»",
+                    "correct": true
+                },
+                {
+                    "text": "Написать коллеге гневное письмо после совещания",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Ключевой принцип ассертивности — это прежде всего:",
+            "options": [
+                {
+                    "text": "Достижение победы в любом споре",
+                    "correct": false
+                },
+                {
+                    "text": "Принятие личной ответственности за своё поведение и его последствия",
+                    "correct": true
+                },
+                {
+                    "text": "Умение получать одобрение окружающих",
+                    "correct": false
+                },
+                {
+                    "text": "Способность избегать любых неприятных ситуаций",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных навыков необходимы для ассертивного поведения?",
+            "options": [
+                {
+                    "text": "Умение говорить «нет» без чувства вины",
+                    "correct": true
+                },
+                {
+                    "text": "Умение распознавать манипуляции и защищаться от них",
+                    "correct": true
+                },
+                {
+                    "text": "Безусловное согласие с мнением большинства",
+                    "correct": false
+                },
+                {
+                    "text": "Умение устанавливать и отстаивать личные границы",
+                    "correct": true
+                },
+                {
+                    "text": "Стремление избегать любых просьб к другим людям",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Руководитель критикует качество вашей работы в грубой форме, переходя на личности. Ассертивный ответ — это:",
+            "options": [
+                {
+                    "text": "Молча принять критику и уйти",
+                    "correct": false
+                },
+                {
+                    "text": "Ответить грубостью на грубость",
+                    "correct": false
+                },
+                {
+                    "text": "Спокойно сказать: «Я готов обсудить качество работы по существу, но прошу общаться в профессиональном ключе»",
+                    "correct": true
+                },
+                {
+                    "text": "Пожаловаться на руководителя коллегам в обход него",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что из перечисленного НЕ является признаком ассертивного общения?",
+            "options": [
+                {
+                    "text": "Использование конкретных фактов вместо обобщений",
+                    "correct": false
+                },
+                {
+                    "text": "Выражение своих чувств в форме «Я-высказываний»",
+                    "correct": false
+                },
+                {
+                    "text": "Угрозы и ультиматумы для достижения цели",
+                    "correct": true
+                },
+                {
+                    "text": "Уважительное выслушивание позиции собеседника",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Согласно теории ассертивных прав, человек имеет право:",
+            "options": [
+                {
+                    "text": "Просить о чём-либо, принимая возможный отказ",
+                    "correct": true
+                },
+                {
+                    "text": "Изменить своё мнение без объяснения причин",
+                    "correct": true
+                },
+                {
+                    "text": "Требовать, чтобы окружающие всегда соглашались с его точкой зрения",
+                    "correct": false
+                },
+                {
+                    "text": "Не объяснять своё поведение, если он этого не хочет",
+                    "correct": true
+                },
+                {
+                    "text": "Самостоятельно расставлять приоритеты в своей жизни",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Как ассертивный человек реагирует на обоснованную критику в свой адрес?",
+            "options": [
+                {
+                    "text": "Воспринимает критику как личное оскорбление и защищается",
+                    "correct": false
+                },
+                {
+                    "text": "Игнорирует критику, считая себя всегда правым",
+                    "correct": false
+                },
+                {
+                    "text": "Признаёт справедливые замечания, не теряя самоуважения, и работает над улучшением",
+                    "correct": true
+                },
+                {
+                    "text": "Немедленно соглашается со всем, что говорит критикующий",
+                    "correct": false
+                }
+            ]
+        }
+    ],
+    "Работа в команде": [
+        {
+            "text": "Чем команда принципиально отличается от рабочей группы?",
+            "options": [
+                {
+                    "text": "В команде каждый работает независимо над своей задачей",
+                    "correct": false
+                },
+                {
+                    "text": "Команда объединена общей целью, взаимной ответственностью и синергией, где результат превышает сумму индивидуальных вкладов",
+                    "correct": true
+                },
+                {
+                    "text": "В команде всегда есть чёткая иерархия подчинения",
+                    "correct": false
+                },
+                {
+                    "text": "Рабочая группа всегда эффективнее команды",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие условия необходимы для формирования эффективной команды?",
+            "options": [
+                {
+                    "text": "Общая, понятная всем цель",
+                    "correct": true
+                },
+                {
+                    "text": "Одинаковый профессиональный опыт у всех участников",
+                    "correct": false
+                },
+                {
+                    "text": "Чёткое распределение ролей и ответственности",
+                    "correct": true
+                },
+                {
+                    "text": "Взаимное доверие между участниками",
+                    "correct": true
+                },
+                {
+                    "text": "Готовность к открытому обсуждению разногласий",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Согласно модели Такмана, в какой последовательности проходят стадии развития команды?",
+            "options": [
+                {
+                    "text": "Штурминг → Формирование → Нормирование → Выполнение",
+                    "correct": false
+                },
+                {
+                    "text": "Формирование → Штурминг → Нормирование → Выполнение",
+                    "correct": true
+                },
+                {
+                    "text": "Нормирование → Формирование → Выполнение → Штурминг",
+                    "correct": false
+                },
+                {
+                    "text": "Выполнение → Нормирование → Штурминг → Формирование",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что характерно для стадии «Штурминг» (Storming) по модели Такмана?",
+            "options": [
+                {
+                    "text": "Возникновение конфликтов из-за различия в подходах и ожиданиях",
+                    "correct": true
+                },
+                {
+                    "text": "Высокая производительность и слаженность работы",
+                    "correct": false
+                },
+                {
+                    "text": "Борьба за роли и влияние внутри команды",
+                    "correct": true
+                },
+                {
+                    "text": "Участники ещё плохо знают друг друга и ведут себя осторожно",
+                    "correct": false
+                },
+                {
+                    "text": "Проявление разногласий в стилях работы",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Какую командную роль по модели Белбина выполняет человек, генерирующий нестандартные идеи и творческие решения, но склонный игнорировать практические детали?",
+            "options": [
+                {
+                    "text": "Координатор",
+                    "correct": false
+                },
+                {
+                    "text": "Генератор идей (Plant)",
+                    "correct": true
+                },
+                {
+                    "text": "Реализатор",
+                    "correct": false
+                },
+                {
+                    "text": "Исследователь ресурсов",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие роли в модели Белбина относятся к категории «Ориентация на действие»?",
+            "options": [
+                {
+                    "text": "Реализатор (Implementer)",
+                    "correct": true
+                },
+                {
+                    "text": "Координатор (Coordinator)",
+                    "correct": false
+                },
+                {
+                    "text": "Формирователь (Shaper)",
+                    "correct": true
+                },
+                {
+                    "text": "Педант/Контролёр (Completer Finisher)",
+                    "correct": true
+                },
+                {
+                    "text": "Генератор идей (Plant)",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое «социальное лодырничество» (social loafing) в командной работе?",
+            "options": [
+                {
+                    "text": "Намеренное замедление работы для саботажа команды",
+                    "correct": false
+                },
+                {
+                    "text": "Тенденция отдельных участников прилагать меньше усилий при работе в группе, чем в одиночку",
+                    "correct": true
+                },
+                {
+                    "text": "Конфликт между участниками команды из-за распределения нагрузки",
+                    "correct": false
+                },
+                {
+                    "text": "Отказ от выполнения задач, не входящих в должностные обязанности",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие факторы способствуют снижению «социального лодырничества» в команде?",
+            "options": [
+                {
+                    "text": "Чёткое закрепление персональной ответственности за конкретные результаты",
+                    "correct": true
+                },
+                {
+                    "text": "Увеличение размера команды",
+                    "correct": false
+                },
+                {
+                    "text": "Прозрачность вклада каждого участника для всей команды",
+                    "correct": true
+                },
+                {
+                    "text": "Значимость задачи для каждого участника лично",
+                    "correct": true
+                },
+                {
+                    "text": "Анонимность при выполнении командных задач",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое «групповое мышление» (groupthink) и чем оно опасно?",
+            "options": [
+                {
+                    "text": "Совместное обсуждение проблем, которое повышает качество решений",
+                    "correct": false
+                },
+                {
+                    "text": "Феномен, при котором желание сохранить единство группы подавляет критическое мышление и ведёт к ошибочным решениям",
+                    "correct": true
+                },
+                {
+                    "text": "Метод коллективного принятия решений на основе голосования",
+                    "correct": false
+                },
+                {
+                    "text": "Стиль руководства, при котором мнение команды учитывается всегда",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие признаки указывают на высокий уровень психологической безопасности в команде?",
+            "options": [
+                {
+                    "text": "Участники открыто высказывают идеи, не боясь осуждения",
+                    "correct": true
+                },
+                {
+                    "text": "Сотрудники признают ошибки и обсуждают их без страха наказания",
+                    "correct": true
+                },
+                {
+                    "text": "В команде никогда не возникает разногласий",
+                    "correct": false
+                },
+                {
+                    "text": "Участники задают вопросы, даже если боятся выглядеть некомпетентно",
+                    "correct": true
+                },
+                {
+                    "text": "Критика всегда направлена на улучшение, а не на личности",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Исследование Google «Проект Аристотель» выявило, что наиболее важным фактором эффективности команды является:",
+            "options": [
+                {
+                    "text": "Высокий средний IQ участников команды",
+                    "correct": false
+                },
+                {
+                    "text": "Психологическая безопасность — уверенность каждого, что его не осудят за высказывание идей и ошибки",
+                    "correct": true
+                },
+                {
+                    "text": "Наличие в команде сильного харизматичного лидера",
+                    "correct": false
+                },
+                {
+                    "text": "Одинаковый уровень профессиональной подготовки всех участников",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие действия руководителя помогают команде эффективно пройти стадию «Штурминг»?",
+            "options": [
+                {
+                    "text": "Игнорировать конфликты, ожидая их самостоятельного разрешения",
+                    "correct": false
+                },
+                {
+                    "text": "Устанавливать чёткие правила взаимодействия и нормы поведения",
+                    "correct": true
+                },
+                {
+                    "text": "Помогать команде сфокусироваться на общей цели",
+                    "correct": true
+                },
+                {
+                    "text": "Создавать условия для открытого обсуждения разногласий",
+                    "correct": true
+                },
+                {
+                    "text": "Немедленно заменять конфликтных участников",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Коллега взял на себя задачу, но не справляется и не сообщает об этом команде. Срок сдачи через день. Как поступит эффективный участник команды?",
+            "options": [
+                {
+                    "text": "Промолчать, чтобы не обидеть коллегу, и ждать результата",
+                    "correct": false
+                },
+                {
+                    "text": "Пожаловаться руководителю, не поговорив с коллегой",
+                    "correct": false
+                },
+                {
+                    "text": "Напрямую уточнить у коллеги статус задачи и предложить помощь или эскалацию проблемы",
+                    "correct": true
+                },
+                {
+                    "text": "Самостоятельно переделать всю работу за коллегу без его ведома",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что отличает зрелую, высокоэффективную команду (стадия Performing по Такману)?",
+            "options": [
+                {
+                    "text": "Участники самостоятельно решают проблемы без постоянного участия руководителя",
+                    "correct": true
+                },
+                {
+                    "text": "Роли гибко перераспределяются в зависимости от задачи",
+                    "correct": true
+                },
+                {
+                    "text": "Команда постоянно нуждается в детальных инструкциях",
+                    "correct": false
+                },
+                {
+                    "text": "Высокий уровень взаимного доверия и поддержки",
+                    "correct": true
+                },
+                {
+                    "text": "Разногласия рассматриваются как ресурс для улучшения решений",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Что означает понятие «синергия» применительно к командной работе?",
+            "options": [
+                {
+                    "text": "Равномерное распределение нагрузки между всеми участниками",
+                    "correct": false
+                },
+                {
+                    "text": "Ситуация, когда совместный результат команды превышает сумму индивидуальных результатов каждого участника",
+                    "correct": true
+                },
+                {
+                    "text": "Способность команды работать без конфликтов",
+                    "correct": false
+                },
+                {
+                    "text": "Максимальная скорость выполнения командных задач",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие коммуникативные практики повышают эффективность командной работы?",
+            "options": [
+                {
+                    "text": "Регулярные короткие статус-встречи (стендапы)",
+                    "correct": true
+                },
+                {
+                    "text": "Общение только через официальные каналы и документы",
+                    "correct": false
+                },
+                {
+                    "text": "Открытое обсуждение ошибок без поиска виноватых",
+                    "correct": true
+                },
+                {
+                    "text": "Прозрачный обмен информацией о прогрессе задач",
+                    "correct": true
+                },
+                {
+                    "text": "Предоставление обратной связи только по итогам квартала",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Участник команды постоянно критикует идеи коллег, не предлагая альтернатив, и подрывает командный дух. Как называется такое поведение в теории командных ролей?",
+            "options": [
+                {
+                    "text": "Роль «Педанта» по Белбину",
+                    "correct": false
+                },
+                {
+                    "text": "Деструктивная командная роль, мешающая эффективной работе группы",
+                    "correct": true
+                },
+                {
+                    "text": "Роль «Формирователя» по Белбину",
+                    "correct": false
+                },
+                {
+                    "text": "Нормальное проявление критического мышления",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие факторы снижают эффективность командной работы?",
+            "options": [
+                {
+                    "text": "Нечёткие цели и размытые зоны ответственности",
+                    "correct": true
+                },
+                {
+                    "text": "Недостаточное доверие между участниками",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярная конструктивная обратная связь",
+                    "correct": false
+                },
+                {
+                    "text": "Неравномерное распределение рабочей нагрузки",
+                    "correct": true
+                },
+                {
+                    "text": "Страх высказать непопулярное мнение",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "В чём состоит ключевое отличие координатора от формирователя в модели Белбина?",
+            "options": [
+                {
+                    "text": "Координатор генерирует идеи, формирователь их реализует",
+                    "correct": false
+                },
+                {
+                    "text": "Координатор объединяет усилия команды и направляет её к цели; формирователь создаёт динамику и давление для достижения результата",
+                    "correct": true
+                },
+                {
+                    "text": "Формирователь занимается только административными задачами",
+                    "correct": false
+                },
+                {
+                    "text": "Между ними нет принципиальных отличий",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных практик характерны для команд, работающих по принципам Agile?",
+            "options": [
+                {
+                    "text": "Короткие итерации (спринты) с регулярным пересмотром приоритетов",
+                    "correct": true
+                },
+                {
+                    "text": "Жёсткое следование первоначальному плану без изменений",
+                    "correct": false
+                },
+                {
+                    "text": "Ежедневные короткие встречи для синхронизации команды",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярные ретроспективы для улучшения процессов работы",
+                    "correct": true
+                },
+                {
+                    "text": "Готовность к изменениям требований на любом этапе работы",
+                    "correct": true
+                }
+            ]
+        }
+    ],
+    "Деловая коммуникация": [
+        {
+            "text": "Деловая коммуникация — это прежде всего:",
+            "options": [
+                {
+                    "text": "Любое неформальное общение между коллегами",
+                    "correct": false
+                },
+                {
+                    "text": "Процесс обмена информацией, направленный на достижение профессиональных целей с соблюдением норм делового этикета",
+                    "correct": true
+                },
+                {
+                    "text": "Исключительно письменная переписка по рабочим вопросам",
+                    "correct": false
+                },
+                {
+                    "text": "Общение между руководителем и подчинёнными только в форме приказов",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных элементов входят в структуру коммуникационного процесса?",
+            "options": [
+                {
+                    "text": "Отправитель сообщения",
+                    "correct": true
+                },
+                {
+                    "text": "Канал передачи информации",
+                    "correct": true
+                },
+                {
+                    "text": "Личные симпатии собеседников",
+                    "correct": false
+                },
+                {
+                    "text": "Получатель сообщения",
+                    "correct": true
+                },
+                {
+                    "text": "Обратная связь (feedback)",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Какой стиль изложения наиболее предпочтителен в деловой переписке?",
+            "options": [
+                {
+                    "text": "Эмоциональный и образный, с использованием метафор",
+                    "correct": false
+                },
+                {
+                    "text": "Краткий, конкретный, структурированный, без лишних слов",
+                    "correct": true
+                },
+                {
+                    "text": "Развёрнутый и многословный, чтобы показать осведомлённость",
+                    "correct": false
+                },
+                {
+                    "text": "Разговорный, с неформальными выражениями",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие барьеры коммуникации относятся к психологическим?",
+            "options": [
+                {
+                    "text": "Предубеждения и стереотипы в отношении собеседника",
+                    "correct": true
+                },
+                {
+                    "text": "Технические неполадки при видеозвонке",
+                    "correct": false
+                },
+                {
+                    "text": "Избирательное восприятие информации",
+                    "correct": true
+                },
+                {
+                    "text": "Языковые различия между участниками",
+                    "correct": false
+                },
+                {
+                    "text": "Эмоциональный стресс в момент разговора",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Что означает понятие «активное слушание» в деловой коммуникации?",
+            "options": [
+                {
+                    "text": "Быстро соглашаться со всем, что говорит собеседник",
+                    "correct": false
+                },
+                {
+                    "text": "Внимательно воспринимать сказанное, задавать уточняющие вопросы и перефразировать услышанное для проверки понимания",
+                    "correct": true
+                },
+                {
+                    "text": "Молчать и не перебивать до конца разговора",
+                    "correct": false
+                },
+                {
+                    "text": "Делать пометки во время разговора, не реагируя на собеседника",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Вы получили письмо с жалобой от клиента. Каков правильный первый шаг в деловом ответе?",
+            "options": [
+                {
+                    "text": "Переслать письмо коллеге, не отвечая клиенту",
+                    "correct": false
+                },
+                {
+                    "text": "Немедленно объяснить, почему клиент неправ",
+                    "correct": false
+                },
+                {
+                    "text": "Поблагодарить за обратную связь, признать проблему и предложить конкретный следующий шаг",
+                    "correct": true
+                },
+                {
+                    "text": "Подождать несколько недель, пока ситуация не разрешится сама",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных характеристик относятся к невербальной коммуникации?",
+            "options": [
+                {
+                    "text": "Зрительный контакт",
+                    "correct": true
+                },
+                {
+                    "text": "Содержание деловой презентации",
+                    "correct": false
+                },
+                {
+                    "text": "Поза и жесты во время разговора",
+                    "correct": true
+                },
+                {
+                    "text": "Интонация и тембр голоса",
+                    "correct": true
+                },
+                {
+                    "text": "Дистанция между собеседниками (проксемика)",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Согласно исследованиям Альберта Мерабяна, какой канал передачи информации оказывает наибольшее влияние на восприятие собеседника при личном общении?",
+            "options": [
+                {
+                    "text": "Содержание слов (вербальный канал)",
+                    "correct": false
+                },
+                {
+                    "text": "Невербальные сигналы: мимика, жесты, поза",
+                    "correct": true
+                },
+                {
+                    "text": "Официальный статус говорящего",
+                    "correct": false
+                },
+                {
+                    "text": "Грамотность письменной речи",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое «обратная связь» в контексте деловой коммуникации?",
+            "options": [
+                {
+                    "text": "Критика действий сотрудника перед всей командой",
+                    "correct": false
+                },
+                {
+                    "text": "Реакция получателя на сообщение, которая позволяет отправителю понять, насколько точно его поняли",
+                    "correct": true
+                },
+                {
+                    "text": "Официальная докладная записка на имя руководителя",
+                    "correct": false
+                },
+                {
+                    "text": "Итоговая оценка работы сотрудника за год",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие принципы входят в концепцию «7C» эффективной деловой коммуникации?",
+            "options": [
+                {
+                    "text": "Clarity (Ясность)",
+                    "correct": true
+                },
+                {
+                    "text": "Conciseness (Краткость)",
+                    "correct": true
+                },
+                {
+                    "text": "Creativity (Креативность)",
+                    "correct": false
+                },
+                {
+                    "text": "Correctness (Корректность)",
+                    "correct": true
+                },
+                {
+                    "text": "Completeness (Полнота)",
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "text": "Какой формат коммуникации наиболее уместен для срочного, но кратко изложимого рабочего вопроса?",
+            "options": [
+                {
+                    "text": "Официальное письмо с подписью и печатью",
+                    "correct": false
+                },
+                {
+                    "text": "Личная встреча продолжительностью 1 час",
+                    "correct": false
+                },
+                {
+                    "text": "Короткое сообщение в корпоративном мессенджере или звонок",
+                    "correct": true
+                },
+                {
+                    "text": "Презентация на ближайшем совещании",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что такое «коммуникационный шум»?",
+            "options": [
+                {
+                    "text": "Громкий разговор коллег в опен-спейс офисе",
+                    "correct": false
+                },
+                {
+                    "text": "Любой фактор — физический, психологический или семантический — искажающий передачу и восприятие сообщения",
+                    "correct": true
+                },
+                {
+                    "text": "Избыточная переписка между сотрудниками",
+                    "correct": false
+                },
+                {
+                    "text": "Намеренное сокрытие информации руководством",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие правила необходимо соблюдать при подготовке и проведении деловых совещаний?",
+            "options": [
+                {
+                    "text": "Заранее разослать участникам повестку дня",
+                    "correct": true
+                },
+                {
+                    "text": "Приглашать как можно больше людей для полноты обсуждения",
+                    "correct": false
+                },
+                {
+                    "text": "Зафиксировать принятые решения и ответственных лиц",
+                    "correct": true
+                },
+                {
+                    "text": "Соблюдать регламент и временные рамки",
+                    "correct": true
+                },
+                {
+                    "text": "Обсуждать все вопросы без предварительной подготовки",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Деловой конфликт в команде наиболее эффективно разрешается через:",
+            "options": [
+                {
+                    "text": "Игнорирование конфликта до его естественного угасания",
+                    "correct": false
+                },
+                {
+                    "text": "Победу одной из сторон любыми средствами",
+                    "correct": false
+                },
+                {
+                    "text": "Открытый диалог с фокусом на интересах, а не на позициях, и поиск взаимовыгодного решения",
+                    "correct": true
+                },
+                {
+                    "text": "Передачу решения конфликта исключительно руководителю",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какое из утверждений о корпоративной электронной переписке является верным?",
+            "options": [
+                {
+                    "text": "Поле «Тема письма» можно оставлять пустым для неформальных сообщений",
+                    "correct": false
+                },
+                {
+                    "text": "Тема письма должна кратко и конкретно отражать суть обращения",
+                    "correct": true
+                },
+                {
+                    "text": "Копия (CC) письма ставится всем сотрудникам компании по умолчанию",
+                    "correct": false
+                },
+                {
+                    "text": "Ответ на деловое письмо допустим в течение одной рабочей недели",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных факторов снижают эффективность деловой коммуникации?",
+            "options": [
+                {
+                    "text": "Двусмысленные формулировки в задании",
+                    "correct": true
+                },
+                {
+                    "text": "Чёткое разграничение зон ответственности",
+                    "correct": false
+                },
+                {
+                    "text": "Избыточная информация, не относящаяся к делу",
+                    "correct": true
+                },
+                {
+                    "text": "Отсутствие подтверждения получения важного сообщения",
+                    "correct": true
+                },
+                {
+                    "text": "Регулярная обратная связь между участниками",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Вы не согласны с позицией коллеги на общем совещании. Наиболее профессиональная реакция:",
+            "options": [
+                {
+                    "text": "Перебить коллегу и немедленно изложить свою точку зрения",
+                    "correct": false
+                },
+                {
+                    "text": "Промолчать и написать жалобу руководителю после совещания",
+                    "correct": false
+                },
+                {
+                    "text": "Дождаться своей очереди, признать рациональное в позиции коллеги и аргументированно изложить альтернативную точку зрения",
+                    "correct": true
+                },
+                {
+                    "text": "Отказаться выполнять решение, принятое на совещании",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Что характеризует вертикальную коммуникацию в организации?",
+            "options": [
+                {
+                    "text": "Обмен информацией между руководителем и подчинёнными",
+                    "correct": true
+                },
+                {
+                    "text": "Передача распоряжений сверху вниз (директивная коммуникация)",
+                    "correct": true
+                },
+                {
+                    "text": "Коммуникация между сотрудниками одного уровня",
+                    "correct": false
+                },
+                {
+                    "text": "Передача обратной связи снизу вверх",
+                    "correct": true
+                },
+                {
+                    "text": "Неформальное общение между коллегами из разных отделов",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какой из приведённых примеров демонстрирует конструктивную деловую обратную связь?",
+            "options": [
+                {
+                    "text": "«Ты плохо справляешься с задачами»",
+                    "correct": false
+                },
+                {
+                    "text": "«Все в команде недовольны твоей работой»",
+                    "correct": false
+                },
+                {
+                    "text": "«В последнем отчёте не хватало раздела с аналитикой данных — это затруднило принятие решений. Давай в следующий раз добавим его»",
+                    "correct": true
+                },
+                {
+                    "text": "«Ты всегда сдаёшь работу с опозданием»",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "text": "Какие из перечисленных навыков являются ключевыми компетенциями делового коммуникатора?",
+            "options": [
+                {
+                    "text": "Умение адаптировать стиль общения под аудиторию и контекст",
+                    "correct": true
+                },
+                {
+                    "text": "Способность чётко формулировать задачи и ожидания",
+                    "correct": true
+                },
+                {
+                    "text": "Стремление к монополизации разговора",
+                    "correct": false
+                },
+                {
+                    "text": "Умение управлять конфликтом и находить компромисс",
+                    "correct": true
+                },
+                {
+                    "text": "Навык активного слушания и уточняющих вопросов",
+                    "correct": true
+                }
+            ]
+        }
+    ]
+};
+    let questions = [];
+    let currentQuestionIndex = 0;
+    let userScore = 0;
+    let botScore = 0;
+    let answered = false;
+
+    const BOT_ACCURACY = 0.7;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const topicContainer = document.getElementById('topic-options');
+        Object.keys(allBanks).forEach(topic => {
+            const btn = document.createElement('button');
+            btn.className = 'topic-btn';
+            btn.innerText = topic;
+
+            // Safari iOS fix: standard onclick works perfectly if it's a <button> without other weird event handlers overlapping.
+            btn.onclick = () => selectTopic(topic);
+
+            topicContainer.appendChild(btn);
+        });
+    });
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function selectTopic(topic) {
+        currentTopic = topic;
+        // Deep copy and shuffle
+        questions = JSON.parse(JSON.stringify(allBanks[topic]));
+        shuffleArray(questions);
+
+        document.getElementById('topic-slide').classList.remove('active');
+        document.getElementById('mode-slide').classList.add('active');
+
+        const startTitle = document.querySelector('#start-slide h2');
+        if(startTitle) {
+            startTitle.innerText = "Тема: " + topic;
+        }
+    }
+
+    function resetGame() {
+        location.reload();
+    }
+
+    function startQuiz() {
+        document.getElementById('start-slide').classList.remove('active');
+        document.getElementById('quiz-slide').classList.add('active');
+        document.getElementById('scoreboard').style.display = 'flex';
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        answered = false;
+        document.getElementById('round-result-box').style.display = 'none';
+
+        const submitBtn = document.getElementById('submit-answer-btn');
+        submitBtn.style.display = 'block';
+        submitBtn.disabled = true;
+
+        const q = questions[currentQuestionIndex];
+        document.getElementById('header-text').innerText = `Вопрос ${currentQuestionIndex + 1} из ${questions.length}`;
+        document.getElementById('question-text').innerHTML = q.text;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        // Count correct answers to determine radio vs checkbox
+        const correctCount = q.options.filter(o => o.correct).length;
+        const inputType = correctCount > 1 ? 'checkbox' : 'radio';
+
+        q.options.forEach((opt, index) => {
+            const label = document.createElement('label');
+            label.className = 'option-btn';
+            label.id = `option-label-${index}`;
+            // iOS Safari click fix
+            label.setAttribute('onclick', ''); 
+
+            const input = document.createElement('input');
+            input.type = inputType;
+            input.name = 'option';
+            input.value = index;
+
+            // Handle change (use click for better iOS cross-compatibility on radios)
+            input.onclick = (e) => {
+                if (answered) return;
+
+                // Stop propagation so label click doesn't double-fire
+                e.stopPropagation();
+
+                // Update selected styles
+                document.querySelectorAll('.option-btn').forEach(lbl => {
+                    const inp = lbl.querySelector('input');
+                    if(inp.checked) lbl.classList.add('selected');
+                    else lbl.classList.remove('selected');
+                });
+
+                // Enable submit button
+                const checkedCount = document.querySelectorAll('input[name="option"]:checked').length;
+                submitBtn.disabled = checkedCount === 0;
+            };
+
+            // Ensure label click also triggers visually 
+            // (If the user taps the label padding instead of the raw input)
+            label.onclick = () => {
+                if (answered) return;
+                // Defer to let input state update natively
+                setTimeout(() => {
+                    document.querySelectorAll('.option-btn').forEach(lbl => {
+                        const inp = lbl.querySelector('input');
+                        if(inp && inp.checked) lbl.classList.add('selected');
+                        else lbl.classList.remove('selected');
+                    });
+                    const checkedCount = document.querySelectorAll('input[name="option"]:checked').length;
+                    submitBtn.disabled = checkedCount === 0;
+                }, 10);
+            };
+
+            const textSpan = document.createElement('span');
+            textSpan.innerHTML = opt.text;
+
+            const userBadge = document.createElement('span');
+            userBadge.className = 'badge badge-user';
+            userBadge.id = `user-badge-${index}`;
+            userBadge.innerText = 'Ваш выбор';
+
+            const botBadge = document.createElement('span');
+            botBadge.className = 'badge badge-bot';
+            botBadge.id = `bot-badge-${index}`;
+            botBadge.innerText = 'Выбор Бота';
+
+            label.appendChild(input);
+            label.appendChild(textSpan);
+            label.appendChild(userBadge);
+            label.appendChild(botBadge);
+
+            optionsContainer.appendChild(label);
+        });
+    }
+
+    function submitAnswer() {
+        if (answered) return;
+        answered = true;
+
+        const q = questions[currentQuestionIndex];
+
+        // Find correct indices
+        const correctIndices = [];
+        q.options.forEach((o, i) => { if (o.correct) correctIndices.push(i); });
+
+        // Find user selections
+        const userSelectedIndices = [];
+        const inputs = document.querySelectorAll('input[name="option"]');
+        inputs.forEach((input, index) => {
+            if (input.checked) userSelectedIndices.push(index);
+            input.disabled = true; // disable inputs
+        });
+
+        document.getElementById('submit-answer-btn').style.display = 'none';
+
+        // Сохраняем для мультиплеерного режима
+        window._lastIsUserCorrect = isUserCorrect;
+        window._lastUserSelectedIndices = userSelectedIndices;
+
+        // Check if user is fully correct
+        const isUserCorrect = (userSelectedIndices.length === correctIndices.length) && 
+                              userSelectedIndices.every(val => correctIndices.includes(val));
+
+        // Logic for Bot
+        let botSelectedIndices = [];
+        if (Math.random() <= BOT_ACCURACY) {
+            // Bot is correct
+            botSelectedIndices = [...correctIndices];
+        } else {
+            // Bot is wrong
+            const wrongIndices = [];
+            q.options.forEach((o, i) => { if (!o.correct) wrongIndices.push(i); });
+            if (wrongIndices.length > 0) {
+                botSelectedIndices.push(wrongIndices[Math.floor(Math.random() * wrongIndices.length)]);
+            } else {
+                botSelectedIndices = [...correctIndices];
+            }
+        }
+
+        const isBotCorrect = (botSelectedIndices.length === correctIndices.length) && 
+                             botSelectedIndices.every(val => correctIndices.includes(val));
+
+        // Visualize selections
+        q.options.forEach((opt, index) => {
+            const label = document.getElementById(`option-label-${index}`);
+
+            if (userSelectedIndices.includes(index)) {
+                document.getElementById(`user-badge-${index}`).style.display = 'block';
+            }
+            if (botSelectedIndices.includes(index)) {
+                document.getElementById(`bot-badge-${index}`).style.display = 'block';
+            }
+
+            // Paint correct green, wrong red
+            if (correctIndices.includes(index)) {
+                label.classList.add('correct');
+            } else if (userSelectedIndices.includes(index) || botSelectedIndices.includes(index)) {
+                label.classList.add('wrong');
+            }
+        });
+
+        // === МУЛЬТИПЛЕЕР: сохраняем ответ и запускаем поллинг ===
+        if (gameMode === 'multiplayer') {
+            if (isUserCorrect) userScore++;
+            document.getElementById('score-user').innerText = userScore;
+            // Показываем правильные/неверные варианты пользователя (без бота)
+            q.options.forEach((opt, index) => {
+                const label = document.getElementById('option-label-' + index);
+                if (correctIndices.includes(index)) {
+                    label.classList.add('correct');
+                } else if (userSelectedIndices.includes(index)) {
+                    label.classList.add('wrong');
+                }
+                if (userSelectedIndices.includes(index)) {
+                    document.getElementById('user-badge-' + index).style.display = 'block';
+                }
+            });
+            // Обновляем заголовок раунда (промежуточный)
+            document.getElementById('round-title').innerText = isUserCorrect ? 'Ваш ответ: ВЕРНО ✓' : 'Ваш ответ: НЕВЕРНО ✗';
+            document.getElementById('round-desc').innerText  = 'Ожидаем ответа коллеги...';
+            document.getElementById('round-result-box').style.display = 'block';
+            // Запускаем сохранение и поллинг
+            saveAnswerAndPoll(currentQuestionIndex, userSelectedIndices, isUserCorrect);
+            return; // Дальнейшая логика бота не нужна
+        }
+
+        // Scoring (режим бота)
+        if (isUserCorrect) userScore++;
+        if (isBotCorrect) botScore++;
+
+        document.getElementById('score-user').innerText = userScore;
+        document.getElementById('score-bot').innerText = botScore;
+
+        // Result Texts
+        let roundTitle = "";
+        let roundDesc = "";
+
+        if (isUserCorrect && !isBotCorrect) {
+            roundTitle = "Вы ответили верно!";
+            roundDesc = "Отличная работа! Робот ошибся, а вы дали верный ответ.";
+        } else if (!isUserCorrect && isBotCorrect) {
+            roundTitle = "Робот оказался умнее!";
+            roundDesc = "Вы ошиблись, а Робот забрал балл в этом вопросе.";
+        } else if (isUserCorrect && isBotCorrect) {
+            roundTitle = "Боевая ничья!";
+            roundDesc = "Вы оба дали правильный ответ. Оба получаете по 1 баллу.";
+        } else {
+            roundTitle = "Обоюдный промах!";
+            roundDesc = "Ни вы, ни Робот не угадали правильный ответ. Ничья, баллы не начисляются.";
+        }
+
+        document.getElementById('round-title').innerText = roundTitle;
+        document.getElementById('round-desc').innerText = roundDesc;
+
+        if (currentQuestionIndex === questions.length - 1) {
+            document.getElementById('next-btn').innerText = "Посмотреть итоги ➔";
+        }
+
+        document.getElementById('round-result-box').style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            showFinalResult();
+        }
+    }
+
+    function showFinalResult() {
+        document.getElementById('quiz-slide').classList.remove('active');
+        document.getElementById('result-slide').classList.add('active');
+        document.getElementById('scoreboard').style.display = 'none';
+
+        const winnerText = document.getElementById('winner-text');
+
+        if (userScore > botScore) {
+            winnerText.innerText = "ПОЗДРАВЛЯЕМ! ВЫ ВЫИГРАЛИ ПОЕДИНОК!";
+            winnerText.style.color = "var(--correct-color)";
+        } else if (userScore < botScore) {
+            winnerText.innerText = "ВЫ ПРОИГРАЛИ ПОЕДИНОК!";
+            winnerText.style.color = "var(--wrong-color)";
+        } else {
+            winnerText.innerText = "НИЧЬЯ!";
+            winnerText.style.color = "#ff9800";
+        }
+
+        document.getElementById('result-text').innerHTML = `Итоговый счет: <br><b>Вы ${userScore} : ${botScore} Бот</b>`;
+    }
+
+
+    // ============================================================
+    // КОНФИГУРАЦИЯ SUPABASE — замените на свои значения
+    // ============================================================
+    const SUPABASE_URL  = 'https://tkhljkqthhxemwszgtyu.supabase.co';
+    const SUPABASE_ANON = 'sb_secret_KrgWgKjy5UormORucmgCLw_Bp_beF3X';
+    const sb = supabase.createClient(https://tkhljkqthhxemwszgtyu.supabase.co, sb_secret_KrgWgKjy5UormORucmgCLw_Bp_beF3X);
+
+    // ============================================================
+    // СОСТОЯНИЕ МУЛЬТИПЛЕЕРА
+    // ============================================================
+    let gameMode      = 'bot';      // 'bot' | 'multiplayer'
+    let myRole        = 'host';     // 'host' | 'guest'
+    let currentGameId = null;
+    let pollTimer     = null;
+
+    // ============================================================
+    // ОПРЕДЕЛЯЕМ РОЛЬ ПРИ ЗАГРУЗКЕ (из URL-параметров)
+    // ============================================================
+    (function detectMultiplayerFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const gameParam = params.get('game');
+        const roleParam = params.get('role');
+        if (gameParam && roleParam === 'guest') {
+            // Гость: сразу заходим в игру
+            currentGameId = gameParam;
+            myRole = 'guest';
+            gameMode = 'multiplayer';
+            joinExistingGame(gameParam);
+        }
+    })();
+
+    // ============================================================
+    // ВЫБОР РЕЖИМА НА mode-slide
+    // ============================================================
+    function chooseBot() {
+        gameMode = 'bot';
+        document.getElementById('mode-slide').classList.remove('active');
+        document.getElementById('start-slide').classList.add('active');
+        const startTitle = document.querySelector('#start-slide h2');
+        if (startTitle) startTitle.innerText = currentTopic;
+    }
+
+    async function chooseColleague() {
+        gameMode = 'multiplayer';
+        myRole   = 'host';
+
+        // Создаём сессию в Supabase
+        const questionsOrder = questions.map((_, i) => i);
+
+        const { data, error } = await sb
+            .from('games')
+            .insert({
+                topic:           currentTopic,
+                questions_order: questionsOrder,
+                status:          'waiting'
+            })
+            .select('game_id')
+            .single();
+
+        if (error) {
+            alert('Ошибка создания игры: ' + error.message);
+            return;
+        }
+
+        currentGameId = data.game_id;
+
+        // Формируем ссылку-приглашение
+        const inviteURL = buildInviteURL(currentGameId);
+        document.getElementById('invite-url').innerText = inviteURL;
+        document.getElementById('invite-link-box').style.display = 'block';
+        document.getElementById('waiting-status').style.display  = 'block';
+
+        // Меняем метку Бота на "Коллега"
+        updateScoreboardLabels();
+
+        // Ждём пока гость подключится
+        pollForGuestJoin();
+    }
+
+    function buildInviteURL(gid) {
+        const base = window.location.href.split('?')[0];
+        return base + '?game=' + gid + '&role=guest';
+    }
+
+    function copyInviteLink() {
+        const url = document.getElementById('invite-url').innerText;
+        navigator.clipboard.writeText(url).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.innerText = '✓ Скопировано!';
+            setTimeout(() => { btn.innerText = '📋 Скопировать'; }, 2000);
+        });
+    }
+
+    function updateScoreboardLabels() {
+        // Перебиваем тексты "Бот" → "Коллега" и "Вы" → "Вы"
+        const sb_el = document.getElementById('scoreboard');
+        if (!sb_el) return;
+        const spans = sb_el.querySelectorAll('span:not(.score-number)');
+        // spans[0]="Вы", spans[1]=":", spans[2]="Бот"
+        if (spans[2]) spans[2].innerText = 'Коллега';
+        // Бейдж бота
+        document.querySelectorAll('.badge-bot').forEach(b => b.innerText = 'Коллега');
+    }
+
+    // Ждём появления гостя (статус → active)
+    function pollForGuestJoin() {
+        pollTimer = setInterval(async () => {
+            const { data } = await sb
+                .from('games')
+                .select('status')
+                .eq('game_id', currentGameId)
+                .single();
+
+            if (data && data.status === 'active') {
+                clearInterval(pollTimer);
+                document.getElementById('waiting-status').innerText = '✓ Коллега подключился! Начинаем поединок...';
+                setTimeout(() => {
+                    document.getElementById('mode-slide').classList.remove('active');
+                    startMultiplayerQuiz();
+                }, 1500);
+            }
+        }, 1500);
+    }
+
+    // Гость подключается к существующей игре
+    async function joinExistingGame(gid) {
+        // Загружаем данные игры из Supabase
+        const { data: game, error } = await sb
+            .from('games')
+            .select('*')
+            .eq('game_id', gid)
+            .single();
+
+        if (error || !game) {
+            alert('Игра не найдена или уже завершена.');
+            return;
+        }
+
+        currentTopic    = game.topic;
+        currentGameId   = gid;
+        gameMode        = 'multiplayer';
+        myRole          = 'guest';
+
+        // Восстанавливаем порядок вопросов
+        const bank = allBanks[game.topic] || [];
+        questions = game.questions_order.map(i => bank[i]).filter(Boolean);
+
+        // Помечаем игру active
+        await sb.from('games').update({ status: 'active' }).eq('game_id', gid);
+
+        // Переходим сразу к тренажёру
+        document.getElementById('landing-page').style.display = 'none';
+        document.getElementById('simulator-page').style.display = 'flex';
+        updateScoreboardLabels();
+        startMultiplayerQuiz();
+    }
+
+    function startMultiplayerQuiz() {
+        // Скрываем все слайды, показываем quiz
+        ['topic-slide','mode-slide','start-slide'].forEach(id => {
+            document.getElementById(id).classList.remove('active');
+        });
+        document.getElementById('quiz-slide').classList.add('active');
+        document.getElementById('scoreboard').style.display = 'flex';
+        loadQuestion();
+    }
+
+    // ============================================================
+    // МУЛЬТИПЛЕЕР: сохранить ответ и ждать оппонента
+    // ============================================================
+    async function saveAnswerAndPoll(questionIndex, selectedIndices, isCorrect) {
+        // Сохраняем свой ответ
+        await sb.from('answers').insert({
+            game_id:          currentGameId,
+            player_role:      myRole,
+            question_index:   questionIndex,
+            selected_indices: selectedIndices,
+            is_correct:       isCorrect
+        });
+
+        // Показываем статус ожидания в кнопке "Далее"
+        const nextBtn = document.getElementById('next-btn');
+        if (nextBtn) {
+            nextBtn.disabled = true;
+            nextBtn.innerText = 'Ждём ответа коллеги...';
+        }
+
+        // Поллинг: ждём ответа оппонента на этот вопрос
+        const opponentRole = myRole === 'host' ? 'guest' : 'host';
+        pollTimer = setInterval(async () => {
+            const { data } = await sb
+                .from('answers')
+                .select('selected_indices, is_correct')
+                .eq('game_id', currentGameId)
+                .eq('player_role', opponentRole)
+                .eq('question_index', questionIndex);
+
+            if (data && data.length > 0) {
+                clearInterval(pollTimer);
+                const opponentAnswer = data[0];
+                showMultiplayerRoundResult(opponentAnswer, questionIndex);
+            }
+        }, 1000);
+    }
+
+    function showMultiplayerRoundResult(opponentAnswer, questionIndex) {
+        const q = questions[questionIndex];
+        const isMeCorrect = /* читаем из текущего состояния */ window._lastIsUserCorrect;
+        const isOpponentCorrect = opponentAnswer.is_correct;
+        const opponentIndices = opponentAnswer.selected_indices;
+
+        // Визуализируем выборы оппонента
+        q.options.forEach((opt, index) => {
+            if (opponentIndices.includes(index)) {
+                const badge = document.getElementById('bot-badge-' + index);
+                if (badge) badge.style.display = 'block';
+            }
+        });
+
+        // Обновляем счёт
+        if (isOpponentCorrect) botScore++;
+        document.getElementById('score-bot').innerText = botScore;
+
+        // Текст результата раунда
+        let roundTitle, roundDesc;
+        if (isMeCorrect && !isOpponentCorrect) {
+            roundTitle = 'Вы ответили верно!';
+            roundDesc  = 'Отличная работа! Коллега ошибся, а вы дали верный ответ.';
+        } else if (!isMeCorrect && isOpponentCorrect) {
+            roundTitle = 'Коллега ответил верно!';
+            roundDesc  = 'На этот раз коллега опередил вас. Продолжайте!';
+        } else if (isMeCorrect && isOpponentCorrect) {
+            roundTitle = 'Оба верно!';
+            roundDesc  = 'Синхронная победа! +1 балл каждому. Продолжаем...';
+        } else {
+            roundTitle = 'Оба ошиблись!';
+            roundDesc  = 'Хм, непростой вопрос. Ни одного балла в этом раунде.';
+        }
+
+        document.getElementById('round-title').innerText = roundTitle;
+        document.getElementById('round-desc').innerText  = roundDesc;
+
+        const nextBtn = document.getElementById('next-btn');
+        if (nextBtn) {
+            nextBtn.disabled = false;
+            const isLast = currentQuestionIndex >= questions.length - 1;
+            nextBtn.innerText = isLast ? 'Финальный результат ➔' : 'Следующий вопрос ➔';
+        }
+
+        document.getElementById('round-result-box').style.display = 'block';
+    }
+
+    </script>
+
+
+
+    </div>
+
+</body>
+</html>
