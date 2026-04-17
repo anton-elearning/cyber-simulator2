@@ -4276,7 +4276,8 @@
         myRole   = 'host';
 
         // Создаём сессию в Supabase
-        const questionsOrder = questions.map((_, i) => i);
+        const originalBank = allBanks[currentTopic];
+const questionsOrder = questions.map(q => originalBank.findIndex(oq => oq.text === q.text));
 
         const { data, error } = await sb
             .from('games')
