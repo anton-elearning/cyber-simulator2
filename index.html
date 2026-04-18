@@ -4100,7 +4100,7 @@
         window._lastIsUserCorrect = isUserCorrect;
         window._lastUserSelectedIndices = userSelectedIndices;
 
-        // Logic for Bot
+                        // Logic for Bot
         let botSelectedIndices = [];
         let isBotCorrect = false;
 
@@ -4129,19 +4129,18 @@
             if (userSelectedIndices.includes(index)) {
                 document.getElementById(`user-badge-${index}`).style.display = 'block';
             }
-            if (botSelectedIndices.includes(index)) {
+            
+            if (gameMode === 'bot' && botSelectedIndices.includes(index)) {
                 document.getElementById(`bot-badge-${index}`).style.display = 'block';
             }
 
             // Paint correct green, wrong red
             if (correctIndices.includes(index)) {
                 label.classList.add('correct');
-            } else if (userSelectedIndices.includes(index) || botSelectedIndices.includes(index)) {
+            } else if (userSelectedIndices.includes(index) || (gameMode === 'bot' && botSelectedIndices.includes(index))) {
                 label.classList.add('wrong');
             }
-        });
-
-        // === МУЛЬТИПЛЕЕР: сохраняем ответ и запускаем поллинг ===
+        });        // === МУЛЬТИПЛЕЕР: сохраняем ответ и запускаем поллинг ===
         if (gameMode === 'multiplayer') {
             if (isUserCorrect) userScore++;
             document.getElementById('score-user').innerText = userScore;
