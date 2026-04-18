@@ -4402,13 +4402,19 @@ const questionsOrder = questions.map(q => originalBank.findIndex(oq => oq.text =
     // ============================================================
     async function saveAnswerAndPoll(questionIndex, selectedIndices, isCorrect) {
         // Сохраняем свой ответ
-        await sb.from('answers').insert({
+        const { error } = await sb.from('answers').insert({
             game_id:          currentGameId,
             player_role:      myRole,
             question_index:   questionIndex,
             selected_indices: selectedIndices,
             is_correct:       isCorrect
         });
+        
+        // ВЫВОДИМ ОШИБКУ НА ЭКРАН, ЕСЛИ ОНА ЕСТЬ
+        if (error) {
+            alert("Ошибка сохранения ответа: " + error.message);
+            console.error(error);
+        }
 
         // Показываем статус ожидания в кнопке "Далее"
         const nextBtn = document.getElementById('next-btn');
