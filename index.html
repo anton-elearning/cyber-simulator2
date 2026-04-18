@@ -4410,10 +4410,9 @@ const questionsOrder = questions.map(q => originalBank.findIndex(oq => oq.text =
             is_correct:       isCorrect
         });
         
-        // ВЫВОДИМ ОШИБКУ НА ЭКРАН, ЕСЛИ ОНА ЕСТЬ
+        // ВЫВОДИМ ОШИБКУ НА ЭКРАН
         if (error) {
-            alert("Ошибка сохранения ответа: " + error.message);
-            console.error(error);
+            alert("ОШИБКА БАЗЫ: " + error.message);
         }
 
         // Показываем статус ожидания в кнопке "Далее"
