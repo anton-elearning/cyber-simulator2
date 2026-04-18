@@ -4061,7 +4061,7 @@
             const botBadge = document.createElement('span');
             botBadge.className = 'badge badge-bot';
             botBadge.id = `bot-badge-${index}`;
-            botBadge.innerText = gameMode === 'multiplayer' ? 'ВЫБОР СОПЕРНИКА' : 'ВЫБОР БОТА';
+            botBadge.innerText = 'Выбор Бота';
 
             label.appendChild(input);
             label.appendChild(textSpan);
@@ -4100,27 +4100,24 @@
         window._lastIsUserCorrect = isUserCorrect;
         window._lastUserSelectedIndices = userSelectedIndices;
 
-                        // Logic for Bot
+        // Logic for Bot
         let botSelectedIndices = [];
-        let isBotCorrect = false;
-
-        if (gameMode === 'bot') {
-            if (Math.random() <= BOT_ACCURACY) {
-                // Bot is correct
-                botSelectedIndices = [...correctIndices];
+        if (Math.random() <= BOT_ACCURACY) {
+            // Bot is correct
+            botSelectedIndices = [...correctIndices];
+        } else {
+            // Bot is wrong
+            const wrongIndices = [];
+            q.options.forEach((o, i) => { if (!o.correct) wrongIndices.push(i); });
+            if (wrongIndices.length > 0) {
+                botSelectedIndices.push(wrongIndices[Math.floor(Math.random() * wrongIndices.length)]);
             } else {
-                // Bot is wrong
-                const wrongIndices = [];
-                q.options.forEach((o, i) => { if (!o.correct) wrongIndices.push(i); });
-                if (wrongIndices.length > 0) {
-                    botSelectedIndices.push(wrongIndices[Math.floor(Math.random() * wrongIndices.length)]);
-                } else {
-                    botSelectedIndices = [...correctIndices];
-                }
+                botSelectedIndices = [...correctIndices];
             }
-            isBotCorrect = (botSelectedIndices.length === correctIndices.length) && 
-                           botSelectedIndices.every(val => correctIndices.includes(val));
         }
+
+        const isBotCorrect = (botSelectedIndices.length === correctIndices.length) && 
+                             botSelectedIndices.every(val => correctIndices.includes(val));
 
         // Visualize selections
         q.options.forEach((opt, index) => {
@@ -4129,22 +4126,22 @@
             if (userSelectedIndices.includes(index)) {
                 document.getElementById(`user-badge-${index}`).style.display = 'block';
             }
-            
-            if (gameMode === 'bot' && botSelectedIndices.includes(index)) {
+            if (botSelectedIndices.includes(index)) {
                 document.getElementById(`bot-badge-${index}`).style.display = 'block';
             }
 
             // Paint correct green, wrong red
             if (correctIndices.includes(index)) {
                 label.classList.add('correct');
-            } else if (userSelectedIndices.includes(index) || (gameMode === 'bot' && botSelectedIndices.includes(index))) {
+            } else if (userSelectedIndices.includes(index) || botSelectedIndices.includes(index)) {
                 label.classList.add('wrong');
             }
-        });        // === МУЛЬТИПЛЕЕР: сохраняем ответ и запускаем поллинг ===
+        });
+
+        // === МУЛЬТИПЛЕЕР: сохраняем ответ и запускаем поллинг ===
         if (gameMode === 'multiplayer') {
             if (isUserCorrect) userScore++;
             document.getElementById('score-user').innerText = userScore;
-
             // Показываем правильные/неверные варианты пользователя (без бота)
             q.options.forEach((opt, index) => {
                 const label = document.getElementById('option-label-' + index);
@@ -4157,19 +4154,16 @@
                     document.getElementById('user-badge-' + index).style.display = 'block';
                 }
             });
-
             // Обновляем заголовок раунда (промежуточный)
             document.getElementById('round-title').innerText = isUserCorrect ? 'Ваш ответ: ВЕРНО ✓' : 'Ваш ответ: НЕВЕРНО ✗';
             document.getElementById('round-desc').innerText  = 'Ожидаем ответа коллеги...';
             document.getElementById('round-result-box').style.display = 'block';
-
             // Запускаем сохранение и поллинг
             saveAnswerAndPoll(currentQuestionIndex, userSelectedIndices, isUserCorrect);
-            return; // Дальнейшая логика начисления очков произойдет после ответа оппонента
+            return; // Дальнейшая логика бота не нужна
         }
-        // ============================================================
 
-        // Scoring (for Bot mode)
+        // Scoring (режим бота)
         if (isUserCorrect) userScore++;
         if (isBotCorrect) botScore++;
 
@@ -4177,31 +4171,230 @@
         document.getElementById('score-bot').innerText = botScore;
 
         // Result Texts
-        let roundTitle = '';
-        let roundDesc = '';
+        let roundTitle = "";
+        let roundDesc = "";
 
         if (isUserCorrect && !isBotCorrect) {
-            roundTitle = 'Вы ответили верно!';
-            roundDesc = 'Отличная работа! Бот ошибся, а вы дали верный ответ.';
+            roundTitle = "Вы ответили верно!";
+            roundDesc = "Отличная работа! Робот ошибся, а вы дали верный ответ.";
         } else if (!isUserCorrect && isBotCorrect) {
-            roundTitle = 'Бот оказался умнее!';
-            roundDesc = 'Вы ошиблись, а ИИ дал правильный ответ. Соберитесь!';
+            roundTitle = "Робот оказался умнее!";
+            roundDesc = "Вы ошиблись, а Робот забрал балл в этом вопросе.";
         } else if (isUserCorrect && isBotCorrect) {
-            roundTitle = 'Ничья!';
-            roundDesc = 'Оба ответили верно. Вы получаете по 1 баллу.';
+            roundTitle = "Боевая ничья!";
+            roundDesc = "Вы оба дали правильный ответ. Оба получаете по 1 баллу.";
         } else {
-            roundTitle = 'Оба ошиблись!';
-            roundDesc = 'Хм, непростой вопрос. Ни одного балла в этом раунде.';
+            roundTitle = "Обоюдный промах!";
+            roundDesc = "Ни вы, ни Робот не угадали правильный ответ. Ничья, баллы не начисляются.";
         }
 
         document.getElementById('round-title').innerText = roundTitle;
         document.getElementById('round-desc').innerText = roundDesc;
 
         if (currentQuestionIndex === questions.length - 1) {
-            document.getElementById('next-btn').innerText = 'ПОСМОТРЕТЬ РЕЗУЛЬТАТЫ →';
+            document.getElementById('next-btn').innerText = "Посмотреть итоги ➔";
         }
 
         document.getElementById('round-result-box').style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            showFinalResult();
+        }
+    }
+
+    function showFinalResult() {
+        document.getElementById('quiz-slide').classList.remove('active');
+        document.getElementById('result-slide').classList.add('active');
+        document.getElementById('scoreboard').style.display = 'none';
+
+        const winnerText = document.getElementById('winner-text');
+
+        if (userScore > botScore) {
+            winnerText.innerText = "ПОЗДРАВЛЯЕМ! ВЫ ВЫИГРАЛИ ПОЕДИНОК!";
+            winnerText.style.color = "var(--correct-color)";
+        } else if (userScore < botScore) {
+            winnerText.innerText = "ВЫ ПРОИГРАЛИ ПОЕДИНОК!";
+            winnerText.style.color = "var(--wrong-color)";
+        } else {
+            winnerText.innerText = "НИЧЬЯ!";
+            winnerText.style.color = "#ff9800";
+        }
+
+        document.getElementById('result-text').innerHTML = `Итоговый счет: <br><b>Вы ${userScore} : ${botScore} Бот</b>`;
+    }
+
+
+    // ============================================================
+    // КОНФИГУРАЦИЯ SUPABASE — замените на свои значения
+    // ============================================================
+    const SUPABASE_URL  = 'https://tkhljkqthhxemwszgtyu.supabase.co';
+    const SUPABASE_ANON = 'sb_publishable_fR5y6sEEo88ViCqnUbnGRg_ow1RrR1D';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    // ============================================================
+    // СОСТОЯНИЕ МУЛЬТИПЛЕЕРА
+    // ============================================================
+    let gameMode      = 'bot';      // 'bot' | 'multiplayer'
+    let myRole        = 'host';     // 'host' | 'guest'
+    let currentGameId = null;
+    let pollTimer     = null;
+
+    // ============================================================
+    // ОПРЕДЕЛЯЕМ РОЛЬ ПРИ ЗАГРУЗКЕ (из URL-параметров)
+    // ============================================================
+    (function detectMultiplayerFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const gameParam = params.get('game');
+        const roleParam = params.get('role');
+        if (gameParam && roleParam === 'guest') {
+            // Гость: сразу заходим в игру
+            currentGameId = gameParam;
+            myRole = 'guest';
+            gameMode = 'multiplayer';
+            joinExistingGame(gameParam);
+        }
+    })();
+
+    // ============================================================
+    // ВЫБОР РЕЖИМА НА mode-slide
+    // ============================================================
+    function chooseBot() {
+        gameMode = 'bot';
+        document.getElementById('mode-slide').classList.remove('active');
+        document.getElementById('start-slide').classList.add('active');
+        const startTitle = document.querySelector('#start-slide h2');
+        if (startTitle) startTitle.innerText = currentTopic;
+    }
+
+    async function chooseColleague() {
+        gameMode = 'multiplayer';
+        myRole   = 'host';
+
+        // Создаём сессию в Supabase
+        const originalBank = allBanks[currentTopic];
+const questionsOrder = questions.map(q => originalBank.findIndex(oq => oq.text === q.text));
+
+        const { data, error } = await sb
+            .from('games')
+            .insert({
+                topic:           currentTopic,
+                questions_order: questionsOrder,
+                status:          'waiting'
+            })
+            .select('game_id')
+            .single();
+
+        if (error) {
+            alert('Ошибка создания игры: ' + error.message);
+            return;
+        }
+
+        currentGameId = data.game_id;
+
+        // Формируем ссылку-приглашение
+        const inviteURL = buildInviteURL(currentGameId);
+        document.getElementById('invite-url').innerText = inviteURL;
+        document.getElementById('invite-link-box').style.display = 'block';
+        document.getElementById('waiting-status').style.display  = 'block';
+
+        // Меняем метку Бота на "Коллега"
+        updateScoreboardLabels();
+
+        // Ждём пока гость подключится
+        pollForGuestJoin();
+    }
+
+    function buildInviteURL(gid) {
+        const base = window.location.href.split('?')[0];
+        return base + '?game=' + gid + '&role=guest';
+    }
+
+    function copyInviteLink() {
+        const url = document.getElementById('invite-url').innerText;
+        navigator.clipboard.writeText(url).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.innerText = '✓ Скопировано!';
+            setTimeout(() => { btn.innerText = '📋 Скопировать'; }, 2000);
+        });
+    }
+
+    function updateScoreboardLabels() {
+        // Перебиваем тексты "Бот" → "Коллега" и "Вы" → "Вы"
+        const sb_el = document.getElementById('scoreboard');
+        if (!sb_el) return;
+        const spans = sb_el.querySelectorAll('span:not(.score-number)');
+        // spans[0]="Вы", spans[1]=":", spans[2]="Бот"
+        if (spans[2]) spans[2].innerText = 'Коллега';
+        // Бейдж бота
+        document.querySelectorAll('.badge-bot').forEach(b => b.innerText = 'Коллега');
+    }
+
+    // Ждём появления гостя (статус → active)
+    function pollForGuestJoin() {
+        pollTimer = setInterval(async () => {
+            const { data } = await sb
+                .from('games')
+                .select('status')
+                .eq('game_id', currentGameId)
+                .single();
+
+            if (data && data.status === 'active') {
+                clearInterval(pollTimer);
+                document.getElementById('waiting-status').innerText = '✓ Коллега подключился! Начинаем поединок...';
+                setTimeout(() => {
+                    document.getElementById('mode-slide').classList.remove('active');
+                    startMultiplayerQuiz();
+                }, 1500);
+            }
+        }, 1500);
+    }
+
+    // Гость подключается к существующей игре
+    async function joinExistingGame(gid) {
+        // Загружаем данные игры из Supabase
+        const { data: game, error } = await sb
+            .from('games')
+            .select('*')
+            .eq('game_id', gid)
+            .single();
+
+        if (error || !game) {
+            alert('Игра не найдена или уже завершена.');
+            return;
+        }
+
+        currentTopic    = game.topic;
+        currentGameId   = gid;
+        gameMode        = 'multiplayer';
+        myRole          = 'guest';
+
+        // Восстанавливаем порядок вопросов
+        const bank = allBanks[game.topic] || [];
+        questions = game.questions_order.map(i => bank[i]).filter(Boolean);
+
+        // Помечаем игру active
+        await sb.from('games').update({ status: 'active' }).eq('game_id', gid);
+
+        // Переходим сразу к тренажёру
+        document.getElementById('landing-page').style.display = 'none';
+        document.getElementById('simulator-page').style.display = 'flex';
+        updateScoreboardLabels();
+        startMultiplayerQuiz();
+    }
+
+    function startMultiplayerQuiz() {
+        // Скрываем все слайды, показываем quiz
+        ['topic-slide','mode-slide','start-slide'].forEach(id => {
+            document.getElementById(id).classList.remove('active');
+        });
+        document.getElementById('quiz-slide').classList.add('active');
+        document.getElementById('scoreboard').style.display = 'flex';
+        loadQuestion();
     }
 
     // ============================================================
