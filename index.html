@@ -4092,13 +4092,13 @@
 
         document.getElementById('submit-answer-btn').style.display = 'none';
 
-        // Сохраняем для мультиплеерного режима
-        window._lastIsUserCorrect = isUserCorrect;
-        window._lastUserSelectedIndices = userSelectedIndices;
-
         // Check if user is fully correct
         const isUserCorrect = (userSelectedIndices.length === correctIndices.length) && 
                               userSelectedIndices.every(val => correctIndices.includes(val));
+
+        // Сохраняем для мультиплеерного режима
+        window._lastIsUserCorrect = isUserCorrect;
+        window._lastUserSelectedIndices = userSelectedIndices;
 
         // Logic for Bot
         let botSelectedIndices = [];
